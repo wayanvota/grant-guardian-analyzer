@@ -59,6 +59,12 @@ The tool accepts manual figures for one reporting period. It cannot verify a doc
 
 `archive/2026-09-29-live.html` is a historical snapshot with known accuracy and input-handling defects. It is excluded from the build and preview server. Do not deploy it as the current version.
 
+## Research and public discussion
+
+The [seven featured sources](docs/RESEARCH-CONTEXT.md) explain the documented research context, including which sources appear in the recovered February research and which were discovered later. The [ranked inventory](docs/PUBLIC-DISCUSSIONS.md) records 53 public pages, posts and comments with dates, a scoring rubric, evidence limits and links. It includes the five comments publicly visible on the original LinkedIn article; additional comments could not be checked.
+
+[Later feedback and update priorities](docs/RESEARCH-CONTEXT.md#what-later-information-justifies-changing) favor better accounting context, evidence for scenario settings and nonprofit user testing. They do not establish a new PJMF scoring formula. These are documented recommendations, not additional application changes.
+
 ## Sources and independence
 
 [PJMF's public documentation](https://www.mcgovern.org/our-work/data-solutions/grant-guardian/) names three example indicators and configurable thresholds and weights. [PJMF's product-development account](https://medium.com/patrick-j-mcgovern-foundation/social-responsibility-comes-first-product-development-lessons-from-grant-guardian-3c5fe6916019) describes source review and editing. Financial reference guidance was checked against the [2025 IRS Form 990](https://www.irs.gov/pub/irs-pdf/f990.pdf) on September 29, 2026; that IRS URL can subsequently serve a newer edition.

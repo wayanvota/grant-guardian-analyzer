@@ -20,6 +20,12 @@ SHA-256:
 
 This proves the identity of the saved September snapshot. It does not establish that the file is identical to the initial February release.
 
+## Research context recovered on September 29
+
+The [seven featured sources](RESEARCH-CONTEXT.md) and [ranked public-discussion inventory](PUBLIC-DISCUSSIONS.md) distinguish sources named in the February 27 research response, earlier public engagement, and later feedback. The response is AI-generated research context, not a recovered build specification.
+
+PJMF’s [October 2024 technical article](https://medium.com/patrick-j-mcgovern-foundation/using-ai-for-data-extraction-an-exploration-of-two-techniques-4affd6681c5f) displays a November 22, 2024 response by Wayan about recreating its approach. This establishes an earlier experiment, not the date of the current application. Wayan’s [public analyzer article](https://www.linkedin.com/pulse/i-reverse-engineered-grant-guardian-ai-tool-foundations-wayan-vota-4jfse) was published March 4, 2026. Comments on that article cannot be original February build influences.
+
 ## September 2026 reconstruction
 
 The user's instructions were to research current PJMF documentation, improve the tool, apply the supplied Intercom-inspired design system, and create a GitHub repository after the changes.
@@ -30,7 +36,7 @@ The work proceeded as follows:
 2. Compare its claims, ratio definitions, source references, and scoring behavior with current public primary sources. Record findings in `research-2026-09-29.md`.
 3. Reproduce incomplete-data scoring and restriction-score monotonicity defects.
 4. Separate deterministic financial logic from the interface, preserving a standalone HTML deployment through a small build script.
-5. Replace the five-step purple interface with the supplied Intercom-inspired design: cream, black, restrained orange brand accent, tight headings, editorial serif accent, and sharp controls. The desktop layout has a left workflow rail; the mobile layout moves navigation above the form.
+5. Replace the five-step blue/teal interface with the supplied Intercom-inspired design: cream, black, restrained orange brand accent, tight headings, editorial serif accent, and sharp controls. The desktop layout has a left workflow rail; the mobile layout moves navigation above the form.
 6. Add editable evidence references, explicit confirmations, unknown-value handling, reconciliation checks, scenario comparisons, context notes, and local JSON save/open. Remove claims of AI extraction and generation.
 7. Make the score optional, replace the faulty scoring curves with explicit bounded formulas, and remove unsupported financial-health labels. This is an intentional method change, not a recovery of PJMF's algorithm.
 8. Add regression tests, inspect browser behavior and responsive rendering, and produce the standalone deployment artifact.
