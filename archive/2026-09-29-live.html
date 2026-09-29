@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grant Guardian Financial Analyzer</title>
+<style>
+  :root {
+    --blue: #1a3a5c;
+    --teal: #0d7a7a;
+    --teal-light: #e4f4f4;
+    --accent: #2196a3;
+    --red: #c0392b;
+    --amber: #d68910;
+    --green: #1e8449;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --border: #d0dce8;
+    --text: #1c2a38;
+    --muted: #5a6e82;
+    --light-muted: #8a9baa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.65; }
+
+  /* HEADER */
+  header {
+    background: var(--blue);
+    color: white;
+    padding: 18px 32px;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    position: sticky; top: 0; z-index: 200;
+  }
+  .logo { width: 42px; height: 42px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  header h1 { font-size: 1.25rem; font-weight: 700; }
+  header p { font-size: 0.78rem; color: #a8c4d8; margin-top: 1px; }
+  .header-badge { margin-left: auto; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #cde; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.05em; white-space: nowrap; }
+
+  /* STEP NAV */
+  .step-nav { background: white; border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; gap: 0; overflow-x: auto; }
+  .step-tab { padding: 14px 20px; font-size: 0.82rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .step-tab:hover { color: var(--accent); }
+  .step-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .step-tab .step-num { display: inline-block; background: var(--bg); border-radius: 50%; width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 0.7rem; margin-right: 6px; }
+  .step-tab.active .step-num { background: var(--teal); color: white; }
+  .step-tab.done .step-num { background: var(--green); color: white; }
+
+  /* MAIN CONTAINER */
+  .container { max-width: 1000px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  /* DISCLOSURE */
+  .disclosure {
+    background: #fef9e7; border-left: 4px solid #f0b429; border-radius: 0 6px 6px 0;
+    padding: 12px 16px; font-size: 0.8rem; color: #7a5c00; margin-bottom: 24px;
+  }
+  .disclosure a { color: #7a5c00; }
+
+  /* CARDS */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .card-title {
+    font-size: 0.95rem; font-weight: 700; color: var(--blue);
+    margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border); padding-bottom: 12px;
+  }
+  .card-title .icon { font-size: 1.1rem; }
+
+  /* FORMS */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
+  .field-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .field-grid, .field-grid-3 { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  label { font-size: 0.78rem; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; display: flex; align-items: center; gap: 4px; }
+
+  /* Tooltip */
+  .tt { position: relative; display: inline-block; }
+  .tt-icon { background: var(--blue); color: white; border-radius: 50%; width: 15px; height: 15px; font-size: 0.62rem; font-weight: 800; text-align: center; line-height: 15px; cursor: help; display: inline-block; }
+  .tt:hover .tt-box {
+    display: block;
+  }
+  .tt-box {
+    display: none;
+    position: absolute; left: 20px; top: -4px; z-index: 300;
+    background: #1c2a38; color: white; border-radius: 6px;
+    padding: 10px 13px; font-size: 0.77rem; font-weight: 400;
+    width: 260px; line-height: 1.45; text-transform: none; letter-spacing: 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+
+  input[type="number"], input[type="text"], select, input[type="email"] {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 9px 12px; font-size: 0.93rem; color: var(--text);
+    background: #fbfcfe; width: 100%; transition: border 0.18s;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(33,150,163,0.1); }
+  .hint { font-size: 0.72rem; color: var(--light-muted); font-style: italic; }
+
+  /* PROFILE OPTIONS */
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  @media (max-width: 600px) { .profile-grid { grid-template-columns: 1fr; } }
+  .profile-opt {
+    border: 2px solid var(--border); border-radius: 8px; padding: 12px 14px;
+    cursor: pointer; transition: all 0.2s; text-align: center;
+  }
+  .profile-opt:hover { border-color: var(--accent); background: var(--teal-light); }
+  .profile-opt.sel { border-color: var(--teal); background: var(--teal-light); }
+  .profile-opt strong { display: block; font-size: 0.88rem; color: var(--blue); margin-bottom: 3px; }
+  .profile-opt span { font-size: 0.72rem; color: var(--muted); }
+
+  /* CURRENCY */
+  .currency-row { display: flex; gap: 10px; align-items: flex-end; }
+  .currency-select { width: 110px !important; flex-shrink: 0; }
+
+  /* HUMAN-IN-LOOP VERIFICATION */
+  .verification-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  .verification-table th { background: var(--bg); padding: 9px 12px; text-align: left; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .verification-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .verification-table tr:last-child td { border-bottom: none; }
+  .verification-table .v-field { font-weight: 600; color: var(--text); }
+  .verification-table .v-source { font-size: 0.73rem; color: var(--light-muted); font-style: italic; }
+  .verification-table .v-val { font-weight: 700; color: var(--blue); }
+  .v-status { display: inline-flex; align-items: center; gap: 5px; font-size: 0.73rem; font-weight: 600; padding: 3px 8px; border-radius: 10px; }
+  .v-ai { background: #e8f4fb; color: #1a5276; }
+  .v-edited { background: #fef9e7; color: #7d6608; }
+
+  /* STEP PANELS */
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--teal); color: white; border: none; border-radius: 8px;
+    padding: 13px 28px; font-size: 1rem; font-weight: 700; cursor: pointer;
+    letter-spacing: 0.02em; transition: background 0.2s, transform 0.1s;
+  }
+  .btn-primary:hover { background: #0a6060; transform: translateY(-1px); }
+  .btn-secondary {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    border-radius: 6px; padding: 10px 20px; font-size: 0.88rem; cursor: pointer; transition: all 0.18s;
+  }
+  .btn-secondary:hover { background: var(--bg); border-color: var(--accent); color: var(--accent); }
+  .btn-row { display: flex; gap: 12px; align-items: center; margin-top: 20px; flex-wrap: wrap; }
+
+  /* WEIGHT WARNING */
+  .weight-warn { font-size: 0.8rem; color: var(--red); margin-top: 8px; display: none; }
+
+  /* ════ REPORT ════ */
+  #report { display: none; margin-top: 32px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 6px 28px rgba(0,0,0,0.12); }
+
+  .rpt-header { background: var(--blue); color: white; padding: 22px 28px 18px; }
+  .rpt-org { font-size: 1.35rem; font-weight: 800; margin-bottom: 5px; }
+  .rpt-meta { font-size: 0.78rem; color: #a8c4d8; display: flex; gap: 20px; flex-wrap: wrap; }
+  .rpt-meta span strong { color: #d8eaf5; }
+
+  /* Score panel — deliberately de-emphasized per Cain's framing */
+  .rpt-score-panel {
+    background: linear-gradient(135deg, #0d5c5c, #1a7a8a);
+    color: white; padding: 22px 28px;
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  }
+  .score-ring {
+    width: 86px; height: 86px; border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.25);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .score-ring .snum { font-size: 1.85rem; font-weight: 800; line-height: 1; }
+  .score-ring .slabel { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8; }
+  .score-context { flex: 1; min-width: 200px; }
+  .score-context .sc-title { font-size: 0.78rem; opacity: 0.8; margin-bottom: 5px; }
+  .score-bar-bg { background: rgba(255,255,255,0.18); border-radius: 20px; height: 8px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 20px; background: white; transition: width 0.9s ease; }
+  .score-context .sc-rating { font-size: 1.05rem; font-weight: 700; margin-top: 7px; }
+  .risk-chip {
+    padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 0.82rem;
+    border: 2px solid rgba(255,255,255,0.4); white-space: nowrap;
+  }
+
+  /* IMPORTANT FRAMING NOTE */
+  .framing-note {
+    background: #e8f0f8; border-left: 4px solid var(--accent);
+    padding: 12px 16px; font-size: 0.82rem; color: #1a3a5c;
+    border-bottom: 1px solid var(--border);
+  }
+  .framing-note strong { color: var(--blue); }
+
+  /* RATIO CARDS */
+  .ratio-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; padding: 20px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  @media (max-width: 680px) { .ratio-grid { grid-template-columns: 1fr; } }
+  .ratio-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: #fafbfc; position: relative; }
+  .ratio-card .rc-name { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
+  .ratio-card .rc-val { font-size: 1.55rem; font-weight: 800; color: var(--blue); line-height: 1.1; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; margin-top: 5px; letter-spacing: 0.02em; }
+  .pill-green { background: #d4efdf; color: #1e8449; }
+  .pill-amber { background: #fef3cd; color: #d68910; }
+  .pill-red { background: #fdedec; color: #c0392b; }
+  .pill-gray { background: #edf0f2; color: #5a6e82; }
+  .rc-thresh { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
+  .rc-formula { font-size: 0.7rem; color: var(--light-muted); font-style: italic; border-top: 1px solid var(--border); padding-top: 7px; margin-top: 8px; }
+  .rc-tooltip-hint { font-size: 0.68rem; color: var(--accent); margin-top: 4px; cursor: help; }
+
+  /* NARRATIVE */
+  .rpt-narrative { padding: 22px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .rpt-section-title { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--teal); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .narrative-body { font-size: 0.93rem; line-height: 1.78; color: var(--text); }
+  .narrative-body p { margin-bottom: 11px; }
+  .narrative-body p:last-child { margin-bottom: 0; }
+  .citation { display: inline-block; background: #e8f4fb; color: #1a5276; font-size: 0.7rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-left: 2px; cursor: help; border: 1px solid #b3d7ed; }
+  .narrative-footer { font-size: 0.72rem; color: var(--light-muted); margin-top: 14px; font-style: italic; border-top: 1px solid var(--border); padding-top: 10px; }
+
+  /* FLAGS */
+  .rpt-flags { padding: 20px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .flag-item { display: flex; gap: 12px; align-items: flex-start; padding: 11px 14px; border-radius: 7px; margin-bottom: 8px; font-size: 0.86rem; }
+  .flag-item:last-child { margin-bottom: 0; }
+  .flag-icon { font-size: 1.05rem; flex-shrink: 0; padding-top: 1px; }
+  .flag-text strong { display: block; margin-bottom: 1px; font-size: 0.88rem; }
+  .flag-red { background: #fdedec; color: #7b241c; }
+  .flag-amber { background: #fef3cd; color: #7d6608; }
+  .flag-green { background: #d4efdf; color: #186a3b; }
+  .flag-info { background: #ebf5fb; color: #1a5276; }
+  .conversation-starters { margin-top: 14px; background: #f8f6ff; border: 1px solid #d0c8f0; border-radius: 7px; padding: 14px 16px; }
+  .conversation-starters h4 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5a3e9a; margin-bottom: 10px; }
+  .conversation-starters ul { margin: 0; padding-left: 18px; }
+  .conversation-starters li { font-size: 0.84rem; color: #3a2d6e; margin-bottom: 6px; line-height: 1.5; }
+
+  /* VERIFICATION TABLE */
+  .rpt-verification { padding: 20px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .ver-note { font-size: 0.73rem; color: var(--light-muted); margin-top: 10px; font-style: italic; }
+
+  /* FOOTER */
+  .rpt-footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 14px 28px; font-size: 0.73rem; color: var(--light-muted);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center;
+  }
+  .btn-print { background: var(--blue); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+  .btn-print:hover { background: #0d2640; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 24px; }
+  .progress-fill { height: 100%; border-radius: 2px; background: var(--teal); transition: width 0.3s; }
+
+  @media print {
+    header, .step-nav, .card:not(#report .card), .disclosure, .progress-bar, .btn-row { display: none !important; }
+    #report { display: block !important; border: none !important; box-shadow: none !important; }
+    .btn-print, .step-panel { display: none !important; }
+    body { background: white; font-size: 12px; }
+    .rpt-header, .rpt-score-panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+    <meta name="description" content="Analyze the financial implications of a grant before committing organizational resources." />
+    <link rel="canonical" href="https://wayan.com/grant-guardian-analyzer.html" />
+    <link rel="icon" href="https://wayan.com/tool-assets/wayan-favicon.ico" sizes="32x32" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://wayan.com/tool-assets/wayan-favicon.ico" type="image/x-icon" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Wayan Vota AI Tools" />
+    <meta property="og:title" content="Grant Guardian Financial Analyzer" />
+    <meta property="og:description" content="Analyze the financial implications of a grant before committing organizational resources." />
+    <meta property="og:url" content="https://wayan.com/grant-guardian-analyzer.html" />
+    <meta property="og:image" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
+    <meta property="og:image:secure_url" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
+    <meta property="og:image:alt" content="AI tools built by Wayan. Practical prototypes with visible evidence and human judgment." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@wayan_vota" />
+    <meta name="twitter:title" content="Grant Guardian Financial Analyzer" />
+    <meta name="twitter:description" content="Analyze the financial implications of a grant before committing organizational resources." />
+    <meta name="twitter:image" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
+    <meta name="twitter:image:alt" content="AI tools built by Wayan. Practical prototypes with visible evidence and human judgment." />
+  </head>
+<body>
+
+<header>
+  <div class="logo">🛡️</div>
+  <div>
+    <h1>Grant Guardian Financial Analyzer</h1>
+    <p>Simulating the funder's-eye view — based on PJMF's publicly documented methodology · <a href="https://mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" style="color:#7dc8d8">mcgovern.org/grant-guardian</a></p>
+  </div>
+  <div class="header-badge">Based on PJMF Public Docs</div>
+</header>
+
+<!-- Step nav -->
+<div class="step-nav">
+  <div class="step-tab active" id="tab-1" onclick="goStep(1)"><span class="step-num" id="sn1">1</span>Organization</div>
+  <div class="step-tab" id="tab-2" onclick="goStep(2)"><span class="step-num" id="sn2">2</span>Financial Position</div>
+  <div class="step-tab" id="tab-3" onclick="goStep(3)"><span class="step-num" id="sn3">3</span>Activities</div>
+  <div class="step-tab" id="tab-4" onclick="goStep(4)"><span class="step-num" id="sn4">4</span>Risk Profile</div>
+  <div class="step-tab" id="tab-5" onclick="goStep(5)"><span class="step-num" id="sn5">5</span>Verify & Analyze</div>
+</div>
+
+<div class="container">
+
+  <div class="disclosure">
+    <strong>What this tool does:</strong> This simulates what a Grant Guardian report looks like, using PJMF's three publicly documented financial ratios (Current Ratio, Cash Reserve Ratio, Donor-Restricted Net Assets Ratio). Individual foundations configure their own thresholds and weights — this tool uses documented examples. Grant Guardian itself uses Claude AI to extract these numbers from uploaded PDFs; here you enter them manually.
+    Sources: <a href="https://mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank">Official Product Page</a> · <a href="https://medium.com/patrick-j-mcgovern-foundation/social-responsibility-comes-first-product-development-lessons-from-grant-guardian-3c5fe6916019" target="_blank">PJMF Medium (Social Responsibility)</a> · <a href="https://claude.com/customers/pjmf" target="_blank">Anthropic Case Study</a>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+
+  <!-- ══ STEP 1: ORG INFO ══ -->
+  <div class="step-panel active" id="panel-1">
+    <div class="card">
+      <div class="card-title"><span class="icon">🏛️</span> Organization Information</div>
+      <div class="field-grid">
+        <div class="field">
+          <label>Organization Name</label>
+          <input type="text" id="orgName" placeholder="e.g. Community Futures Alliance" />
+        </div>
+        <div class="field">
+          <label>Fiscal Year End</label>
+          <input type="text" id="fyEnd" placeholder="e.g. December 31, 2024" />
+        </div>
+        <div class="field">
+          <label>Primary Document Source</label>
+          <select id="docType">
+            <option value="990_audited">Form 990 + Audited Statements</option>
+            <option value="990">IRS Form 990 only</option>
+            <option value="audited">Audited Financial Statements only</option>
+            <option value="unaudited">Unaudited / Management Financials</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Program Area</label>
+          <input type="text" id="programArea" placeholder="e.g. Education, Housing, Health" />
+        </div>
+        <div class="field">
+          <label>Currency <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Grant Guardian supports international organizations with currency conversion. Select the currency of your submitted financial documents.</span></span></label>
+          <select id="currency">
+            <option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="Other">Other currency</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Organization Type</label>
+          <select id="orgType">
+            <option value="established">Established (5+ years, stable revenue)</option>
+            <option value="emerging">Emerging (1–5 years, growing)</option>
+            <option value="early">Early-stage (&lt;1 year or pre-revenue)</option>
+            <option value="community">Community-based / membership-funded</option>
+            <option value="international">International / humanitarian</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goStep(2)">Next: Financial Position →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2: STATEMENT OF FINANCIAL POSITION ══ -->
+  <div class="step-panel" id="panel-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Statement of Financial Position (Balance Sheet)</div>
+      <p style="font-size:0.83rem;color:var(--muted);margin-bottom:18px;">These values feed the <strong>Current Ratio</strong> and <strong>Donor-Restricted Net Assets Ratio</strong>. In Grant Guardian, Claude AI extracts these from your uploaded PDFs and identifies the exact document and page where each number was found.</p>
+
+      <div class="field-grid">
+        <div class="field">
+          <label>Current Assets <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Cash, receivables due within 12 months, prepaid expenses, and short-term investments. Form 990 Part X, or balance sheet current assets section.</span></span></label>
+          <input type="number" id="currentAssets" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X — or balance sheet current assets</span>
+        </div>
+        <div class="field">
+          <label>Current Liabilities <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Obligations due within 12 months: accounts payable, accrued liabilities, deferred revenue, current portion of long-term debt.</span></span></label>
+          <input type="number" id="currentLiabilities" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X — or balance sheet current liabilities</span>
+        </div>
+        <div class="field">
+          <label>Total Assets</label>
+          <input type="number" id="totalAssets" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X, Line 16</span>
+        </div>
+        <div class="field">
+          <label>Total Liabilities</label>
+          <input type="number" id="totalLiabilities" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X, Line 26</span>
+        </div>
+        <div class="field">
+          <label>Unrestricted Cash &amp; Cash Equivalents <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Operating cash and money market funds NOT subject to donor restrictions. Exclude restricted cash held for specific purposes. Form 990 Part X, Lines 1–2 (unrestricted portion).</span></span></label>
+          <input type="number" id="unrestrictedCash" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X, Lines 1–2 (unrestricted only)</span>
+        </div>
+        <div class="field">
+          <label>Liquid Unrestricted Investments <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Marketable securities and investments liquidatable within 90 days without material penalty, NOT donor-restricted. Enter 0 if none. Form 990 Part X, Lines 3–4 (unrestricted, short-term).</span></span></label>
+          <input type="number" id="liquidInvestments" placeholder="$ (0 if none)" min="0" step="1000" />
+          <span class="hint">Form 990 Part X, Lines 3–4 (unrestricted short-term)</span>
+        </div>
+        <div class="field">
+          <label>Donor-Restricted Net Assets <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Net assets subject to donor-imposed restrictions — both purpose-restricted (temporarily) and endowment (permanently). Form 990 Part X, Lines 28–29 (with donor restrictions).</span></span></label>
+          <input type="number" id="restrictedNetAssets" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X, Lines 28–29 (with donor restrictions)</span>
+        </div>
+        <div class="field">
+          <label>Net Assets Without Donor Restrictions</label>
+          <input type="number" id="unrestrictedNetAssets" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part X, Line 27 (without donor restrictions)</span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goStep(1)">← Back</button>
+      <button class="btn-primary" onclick="goStep(3)">Next: Statement of Activities →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3: STATEMENT OF ACTIVITIES ══ -->
+  <div class="step-panel" id="panel-3">
+    <div class="card">
+      <div class="card-title"><span class="icon">📈</span> Statement of Activities (Income Statement)</div>
+      <p style="font-size:0.83rem;color:var(--muted);margin-bottom:18px;">These values feed the <strong>Cash Reserve Ratio</strong> (via average monthly expenses) and provide context for the AI-generated narrative summary and revenue concentration flags.</p>
+
+      <div class="field-grid">
+        <div class="field">
+          <label>Total Annual Expenses <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Total functional expenses for the fiscal year — program services + management & general + fundraising. Divided by 12 to produce average monthly expenses for the Cash Reserve Ratio.</span></span></label>
+          <input type="number" id="totalExpenses" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part IX, Line 25 Column A (Total functional expenses)</span>
+        </div>
+        <div class="field">
+          <label>Total Annual Revenue</label>
+          <input type="number" id="totalRevenue" placeholder="$" min="0" step="1000" />
+          <span class="hint">Form 990 Part VIII, Line 12 (Total revenue)</span>
+        </div>
+        <div class="field">
+          <label>Government Grants / Contracts</label>
+          <input type="number" id="govGrants" placeholder="$ (0 if none)" min="0" step="1000" />
+          <span class="hint">Form 990 Part VIII, Lines 1c + 2</span>
+        </div>
+        <div class="field">
+          <label>Foundation / Private Grants</label>
+          <input type="number" id="privGrants" placeholder="$ (0 if none)" min="0" step="1000" />
+          <span class="hint">Form 990 Part VIII, Line 1b</span>
+        </div>
+        <div class="field">
+          <label>Program Service Revenue</label>
+          <input type="number" id="programRevenue" placeholder="$ (0 if none)" min="0" step="1000" />
+          <span class="hint">Form 990 Part VIII, Line 2 (earned revenue)</span>
+        </div>
+        <div class="field">
+          <label>Individual Contributions</label>
+          <input type="number" id="indivContrib" placeholder="$ (0 if none)" min="0" step="1000" />
+          <span class="hint">Form 990 Part VIII, Line 1a (individual donors)</span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goStep(2)">← Back</button>
+      <button class="btn-primary" onclick="goStep(4)">Next: Risk Profile →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 4: RISK PROFILE ══ -->
+  <div class="step-panel" id="panel-4">
+    <div class="card">
+      <div class="card-title"><span class="icon">⚙️</span> Funder Risk Profile Configuration</div>
+      <p style="font-size:0.83rem;color:var(--muted);margin-bottom:16px;">
+        In Grant Guardian, each foundation configures its own risk profile — choosing which indicators to use, what thresholds trigger review, and how heavily to weight each factor. Select a preset below or customize the thresholds and weights directly.
+      </p>
+      <div class="profile-grid">
+        <div class="profile-opt sel" id="po-established" onclick="setProfile('established')">
+          <strong>🏦 Established Orgs</strong>
+          <span>Large, stable organizations with predictable revenue. Higher liquidity expectations.</span>
+        </div>
+        <div class="profile-opt" id="po-emerging" onclick="setProfile('emerging')">
+          <strong>🌱 Emerging / Early-Stage</strong>
+          <span>Newer or growing organizations. Lower thresholds to avoid penalizing healthy risk.</span>
+        </div>
+        <div class="profile-opt" id="po-community" onclick="setProfile('community')">
+          <strong>🏘️ Community-Based</strong>
+          <span>Membership-funded or grassroots orgs with unconventional revenue models.</span>
+        </div>
+      </div>
+
+      <div class="field-grid-3" style="margin-bottom:16px;">
+        <div class="field">
+          <label>Current Ratio Threshold <span class="tt"><span class="tt-icon">?</span><span class="tt-box">PJMF example: 1.0 for large established orgs; 0.5 for early-stage orgs. Below this threshold, the ratio is flagged for program officer review.</span></span></label>
+          <input type="number" id="threshCurrent" value="1.0" min="0" max="5" step="0.1" />
+          <span class="hint">Flag when Current Ratio falls below this</span>
+        </div>
+        <div class="field">
+          <label>Cash Reserve Min (months) <span class="tt"><span class="tt-icon">?</span><span class="tt-box">How many months of liquid, unrestricted operating expenses the org should hold. Industry standard: 3 months. Below 1 month is generally considered critical.</span></span></label>
+          <input type="number" id="threshReserve" value="3.0" min="0" max="24" step="0.5" />
+          <span class="hint">Flag when reserve falls below this many months</span>
+        </div>
+        <div class="field">
+          <label>Max Restriction Ratio (%) <span class="tt"><span class="tt-icon">?</span><span class="tt-box">Maximum acceptable proportion of donor-restricted net assets to total net assets. Higher restriction means less operational flexibility.</span></span></label>
+          <input type="number" id="threshRestriction" value="60" min="0" max="100" step="5" />
+          <span class="hint">Flag when donor-restricted % exceeds this</span>
+        </div>
+      </div>
+
+      <div class="field-grid-3">
+        <div class="field">
+          <label>Current Ratio Weight (%)</label>
+          <input type="number" id="wCurrent" value="35" min="0" max="100" step="5" oninput="checkWeights()" />
+        </div>
+        <div class="field">
+          <label>Cash Reserve Weight (%)</label>
+          <input type="number" id="wReserve" value="40" min="0" max="100" step="5" oninput="checkWeights()" />
+        </div>
+        <div class="field">
+          <label>Restriction Ratio Weight (%)</label>
+          <input type="number" id="wRestriction" value="25" min="0" max="100" step="5" oninput="checkWeights()" />
+        </div>
+      </div>
+      <p class="weight-warn" id="weightWarn">⚠️ Weights must total 100%. Currently: <span id="warnSum"></span>%</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goStep(3)">← Back</button>
+      <button class="btn-primary" onclick="goStep(5)">Next: Verify &amp; Analyze →</button>
+    </div>
+  </div>
+
+  <!-- ══ STEP 5: HUMAN-IN-THE-LOOP VERIFICATION ══ -->
+  <div class="step-panel" id="panel-5">
+    <div class="card">
+      <div class="card-title"><span class="icon">🔍</span> Human-in-the-Loop: Review &amp; Verify Extracted Values</div>
+      <p style="font-size:0.83rem;color:var(--muted);margin-bottom:14px;">
+        In Grant Guardian, Claude AI extracts each value and identifies <strong>exactly which document and page number</strong> it came from. Program officers review and can accept or override any extracted value before the analysis runs. This is how the tool keeps humans in the loop at every step.
+        <br><span style="font-style:italic;color:var(--light-muted);font-size:0.75rem;">Below are the values you entered. Edit any field to simulate the override functionality, then run the analysis.</span>
+      </p>
+      <div style="overflow-x:auto;">
+        <table class="verification-table">
+          <thead>
+            <tr>
+              <th>Data Field</th>
+              <th>Value (AI-Extracted / User Entered)</th>
+              <th>Document Source &amp; Page Reference</th>
+              <th>Used In Ratio</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="verifyTableBody"></tbody>
+        </table>
+      </div>
+      <p class="ver-note">✏️ In Grant Guardian, users can hover over any ratio to see how it was calculated. All extracted values link back to the source document and page number. Program officers may override any AI-extracted value before finalizing the analysis.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goStep(4)">← Back</button>
+      <button class="btn-primary" onclick="runAnalysis()">🔍 Generate Financial Analysis Report</button>
+      <button class="btn-secondary" onclick="resetAll()" style="margin-left:auto;">↺ Start Over</button>
+    </div>
+    <p class="weight-warn" id="weightWarn2" style="margin-top:8px;">⚠️ Weights must total 100%. Go back to Step 4 to fix.</p>
+  </div>
+
+  <!-- ══ REPORT ══ -->
+  <div id="report">
+    <div class="rpt-header">
+      <div class="rpt-org" id="rOrgName">—</div>
+      <div class="rpt-meta">
+        <span>📅 FY: <strong id="rFY">—</strong></span>
+        <span>📄 <strong id="rDocType">—</strong></span>
+        <span>🏷️ <strong id="rProgram">—</strong></span>
+        <span>💱 <strong id="rCurrency">—</strong></span>
+        <span>🕐 Generated: <strong id="rDate">—</strong></span>
+      </div>
+    </div>
+
+    <!-- Score — with explicit framing note -->
+    <div class="rpt-score-panel">
+      <div class="score-ring">
+        <div class="snum" id="rScore">—</div>
+        <div class="slabel">/ 100</div>
+      </div>
+      <div class="score-context">
+        <div class="sc-title">Composite Financial Health Score (weighted across 3 indicators)</div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="rScoreBar" style="width:0%"></div></div>
+        <div class="sc-rating" id="rRating">—</div>
+      </div>
+      <div class="risk-chip" id="rRiskChip">—</div>
+    </div>
+
+    <!-- Framing note — critical to include per Cain's quote -->
+    <div class="framing-note">
+      <strong>Program Officer Note:</strong> Per PJMF's design philosophy, "We're not trying to spit out a single composite score that says yes or no. We're trying to standardize the process of identifying areas where you need to clarify or have deeper conversations with the nonprofit." — Nick Cain, VP of Strategy &amp; Innovation, PJMF. The score below is a <em>conversation-starting input</em>, not a funding recommendation.
+    </div>
+
+    <!-- Three ratios -->
+    <div class="ratio-grid">
+      <div class="ratio-card">
+        <div class="rc-name">① Current Ratio</div>
+        <div class="rc-val" id="rCurrent">—</div>
+        <div id="rCurrentPill"></div>
+        <div class="rc-thresh" id="rCurrentThresh"></div>
+        <div class="rc-formula">Current Assets ÷ Current Liabilities<br><span style="color:var(--accent)">Source: Statement of Financial Position</span></div>
+        <div class="rc-tooltip-hint">ⓘ Hover to see calculation in Grant Guardian</div>
+      </div>
+      <div class="ratio-card">
+        <div class="rc-name">② Cash Reserve Ratio</div>
+        <div class="rc-val" id="rReserve">— mo</div>
+        <div id="rReservePill"></div>
+        <div class="rc-thresh" id="rReserveThresh"></div>
+        <div class="rc-formula">(Unrestr. Cash + Liquid Investments) ÷ Avg. Monthly Expenses<br><span style="color:var(--accent)">Source: Statement of Financial Position + Statement of Activities</span></div>
+        <div class="rc-tooltip-hint">ⓘ Hover to see calculation in Grant Guardian</div>
+      </div>
+      <div class="ratio-card">
+        <div class="rc-name">③ Donor-Restricted Net Assets</div>
+        <div class="rc-val" id="rRestriction">—%</div>
+        <div id="rRestrictionPill"></div>
+        <div class="rc-thresh" id="rRestrictionThresh"></div>
+        <div class="rc-formula">Donor-Restricted Net Assets ÷ (Total Assets − Total Liabilities)<br><span style="color:var(--accent)">Source: Statement of Financial Position</span></div>
+        <div class="rc-tooltip-hint">ⓘ Hover to see calculation in Grant Guardian</div>
+      </div>
+    </div>
+
+    <!-- AI Narrative -->
+    <div class="rpt-narrative">
+      <div class="rpt-section-title">🤖 AI-Generated Financial Narrative Summary</div>
+      <div class="narrative-body" id="rNarrative">—</div>
+      <div class="narrative-footer">
+        Citations above reference values as entered by the user (in Grant Guardian, these link directly to the source document and page number where each value was extracted). This narrative is an analytical input for program officer review — it does not constitute a funding recommendation.
+      </div>
+    </div>
+
+    <!-- Flags & conversation starters -->
+    <div class="rpt-flags">
+      <div class="rpt-section-title">🚩 Items for Program Officer Review</div>
+      <div id="rFlags">—</div>
+      <div class="conversation-starters" id="rConversation" style="display:none;">
+        <h4>💬 Suggested Conversation Starters for Grantee Discussion</h4>
+        <ul id="rConvoList"></ul>
+      </div>
+    </div>
+
+    <!-- Human-in-the-loop verification log -->
+    <div class="rpt-verification">
+      <div class="rpt-section-title">📋 Extracted Data Log (with Document Source References)</div>
+      <div style="overflow-x:auto;">
+        <table class="verification-table">
+          <thead>
+            <tr>
+              <th>Data Field</th>
+              <th>Value</th>
+              <th>Document Reference &amp; Page</th>
+              <th>Used In</th>
+              <th>Verified By</th>
+            </tr>
+          </thead>
+          <tbody id="rExtTable"></tbody>
+        </table>
+      </div>
+      <p class="ver-note">In Grant Guardian, each extracted value links to the exact page of the submitted document. Program officers can accept, edit, or flag any value. This audit trail supports compliance and accountability.</p>
+    </div>
+
+    <div class="rpt-footer">
+      <span>Grant Guardian Financial Analyzer · Based on PJMF publicly documented methodology ·
+        <a href="https://mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank">mcgovern.org/grant-guardian</a>
+        · To use the real tool: <a href="https://gg.mcgovern.org" target="_blank">gg.mcgovern.org</a> (free for verified philanthropies)
+      </span>
+      <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ════ STATE ════
+let currentStep = 1;
+const totalSteps = 5;
+
+const profiles = {
+  established: { threshCurrent:1.0, threshReserve:3.0, threshRestriction:60, wCurrent:35, wReserve:40, wRestriction:25 },
+  emerging:    { threshCurrent:0.5, threshReserve:1.5, threshRestriction:75, wCurrent:30, wReserve:45, wRestriction:25 },
+  community:   { threshCurrent:0.75, threshReserve:2.0, threshRestriction:70, wCurrent:35, wReserve:40, wRestriction:25 }
+};
+
+const docLabels = {
+  '990_audited': 'Form 990 + Audited Statements',
+  '990': 'IRS Form 990',
+  'audited': 'Audited Financial Statements',
+  'unaudited': 'Unaudited / Management Financials'
+};
+
+// Document/page references (simulated — in real Grant Guardian these are actual page citations)
+const docRefs = {
+  currentAssets:         ['Statement of Financial Position', 'Balance Sheet, Current Assets section'],
+  currentLiabilities:    ['Statement of Financial Position', 'Balance Sheet, Current Liabilities section'],
+  totalAssets:           ['Form 990 Part X', 'Line 16 — Total assets'],
+  totalLiabilities:      ['Form 990 Part X', 'Line 26 — Total liabilities'],
+  unrestrictedCash:      ['Form 990 Part X', 'Lines 1–2 — Cash (unrestricted)'],
+  liquidInvestments:     ['Form 990 Part X', 'Lines 3–4 — Short-term investments (unrestricted)'],
+  restrictedNetAssets:   ['Form 990 Part X', 'Lines 28–29 — Net assets with donor restrictions'],
+  unrestrictedNetAssets: ['Form 990 Part X', 'Line 27 — Net assets without donor restrictions'],
+  totalExpenses:         ['Form 990 Part IX', 'Line 25 Col A — Total functional expenses'],
+  totalRevenue:          ['Form 990 Part VIII', 'Line 12 — Total revenue'],
+  govGrants:             ['Form 990 Part VIII', 'Lines 1c + 2 — Government grants'],
+  privGrants:            ['Form 990 Part VIII', 'Line 1b — Foundation/private grants'],
+  programRevenue:        ['Form 990 Part VIII', 'Line 2 — Program service revenue'],
+  indivContrib:          ['Form 990 Part VIII', 'Line 1a — Individual contributions'],
+};
+
+const fieldLabels = {
+  currentAssets: 'Current Assets',
+  currentLiabilities: 'Current Liabilities',
+  totalAssets: 'Total Assets',
+  totalLiabilities: 'Total Liabilities',
+  unrestrictedCash: 'Unrestricted Cash & Equivalents',
+  liquidInvestments: 'Liquid Unrestricted Investments',
+  restrictedNetAssets: 'Donor-Restricted Net Assets',
+  unrestrictedNetAssets: 'Net Assets Without Donor Restrictions',
+  totalExpenses: 'Total Annual Expenses',
+  totalRevenue: 'Total Annual Revenue',
+  govGrants: 'Government Grants/Contracts',
+  privGrants: 'Foundation/Private Grants',
+  programRevenue: 'Program Service Revenue',
+  indivContrib: 'Individual Contributions',
+};
+
+const fieldRatioUse = {
+  currentAssets: 'Current Ratio',
+  currentLiabilities: 'Current Ratio',
+  totalAssets: 'Donor-Restriction Ratio; Net Assets',
+  totalLiabilities: 'Donor-Restriction Ratio; Net Assets',
+  unrestrictedCash: 'Cash Reserve Ratio',
+  liquidInvestments: 'Cash Reserve Ratio',
+  restrictedNetAssets: 'Donor-Restriction Ratio',
+  unrestrictedNetAssets: 'Reference / Context',
+  totalExpenses: 'Cash Reserve Ratio (÷12 = monthly avg)',
+  totalRevenue: 'Operating Surplus; Revenue Concentration',
+  govGrants: 'Revenue Concentration Analysis',
+  privGrants: 'Revenue Concentration Analysis',
+  programRevenue: 'Revenue Diversification Context',
+  indivContrib: 'Revenue Diversification Context',
+};
+
+// ════ HELPERS ════
+const $ = id => document.getElementById(id);
+const num = id => parseFloat($(id).value) || 0;
+const fmt = n => n.toLocaleString('en-US', {maximumFractionDigits:0});
+const fmtD = (n, d=2) => n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
+
+function currSymbol() {
+  const c = $('currency') ? $('currency').value : 'USD';
+  const map = {USD:'$', EUR:'€', GBP:'£', CAD:'CA$', AUD:'A$', Other:''};
+  return map[c] || '';
+}
+function fmtCur(n) { return currSymbol() + fmt(n); }
+
+function pillHtml(cls, text) { return `<span class="pill pill-${cls}">${text}</span>`; }
+
+// ════ STEP NAVIGATION ════
+function goStep(n) {
+  // Validate weight before leaving step 4
+  if (currentStep === 4 && n === 5) {
+    const ws = num('wCurrent') + num('wReserve') + num('wRestriction');
+    if (Math.abs(ws - 100) > 1) {
+      $('weightWarn').style.display = 'block';
+      $('warnSum').textContent = ws;
+      return;
+    }
+    $('weightWarn').style.display = 'none';
+    buildVerifyTable();
+  }
+  // Mark done
+  const doneEl = $('sn' + currentStep);
+  if (doneEl && n > currentStep) doneEl.textContent = '✓';
+
+  currentStep = n;
+  for (let i = 1; i <= totalSteps; i++) {
+    $('panel-' + i).classList.toggle('active', i === n);
+    $('tab-' + i).classList.toggle('active', i === n);
+    $('tab-' + i).classList.toggle('done', i < n);
+  }
+  $('progressFill').style.width = (n / totalSteps * 100) + '%';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function checkWeights() {
+  const ws = num('wCurrent') + num('wReserve') + num('wRestriction');
+  $('weightWarn').style.display = Math.abs(ws - 100) > 1 ? 'block' : 'none';
+  if ($('warnSum')) $('warnSum').textContent = ws;
+}
+
+function setProfile(key) {
+  ['established','emerging','community'].forEach(k =>
+    $('po-' + k).classList.toggle('sel', k === key));
+  const p = profiles[key];
+  $('threshCurrent').value = p.threshCurrent;
+  $('threshReserve').value = p.threshReserve;
+  $('threshRestriction').value = p.threshRestriction;
+  $('wCurrent').value = p.wCurrent;
+  $('wReserve').value = p.wReserve;
+  $('wRestriction').value = p.wRestriction;
+  checkWeights();
+}
+
+// ════ VERIFICATION TABLE (Step 5) ════
+function buildVerifyTable() {
+  const fields = Object.keys(fieldLabels);
+  const docType = $('docType').value;
+  const rows = fields.map(fid => {
+    const val = num(fid);
+    const [docName, pageRef] = docRefs[fid];
+    const displayDoc = docType === '990' || docType === '990_audited' ? docName : 'Financial Statements';
+    return `<tr>
+      <td><div class="v-field">${fieldLabels[fid]}</div><div class="v-source">${fieldRatioUse[fid]}</div></td>
+      <td class="v-val">${fmtCur(val)}</td>
+      <td><div style="font-size:0.78rem;font-weight:600">${displayDoc}</div><div class="v-source">${pageRef}</div></td>
+      <td style="font-size:0.78rem;color:var(--muted)">${fieldRatioUse[fid]}</td>
+      <td><span class="v-status v-ai">🤖 AI Extracted</span></td>
+    </tr>`;
+  });
+  $('verifyTableBody').innerHTML = rows.join('');
+}
+
+// ════ SCORING ════
+function scoreCurrent(ratio, thresh) {
+  if (!thresh) return 50;
+  if (ratio >= thresh * 2) return 100;
+  if (ratio >= thresh) return 70 + (ratio - thresh) / thresh * 30;
+  if (ratio >= thresh * 0.75) return 40 + (ratio - thresh*0.75)/(thresh*0.25) * 30;
+  if (ratio >= thresh * 0.5) return 15 + (ratio - thresh*0.5)/(thresh*0.25) * 25;
+  return Math.max(0, ratio / (thresh * 0.5) * 15);
+}
+function scoreReserve(months, thresh) {
+  if (!thresh) return 50;
+  if (months >= thresh * 2) return 100;
+  if (months >= thresh) return 70 + (months - thresh)/thresh * 30;
+  if (months >= thresh * 0.5) return 25 + (months - thresh*0.5)/(thresh*0.5) * 45;
+  return Math.max(0, months / (thresh * 0.5) * 25);
+}
+function scoreRestriction(pct, thresh) {
+  if (pct <= 0) return 100;
+  if (pct <= thresh * 0.5) return 100;
+  if (pct <= thresh) return 70 + (thresh - pct)/(thresh*0.5) * 30;
+  if (pct <= thresh * 1.3) return 30 + (thresh*1.3 - pct)/(thresh*0.3) * 40;
+  return Math.max(0, 30 - (pct - thresh*1.3)/(100 - thresh*1.3) * 30);
+}
+
+function ratingFromScore(s) {
+  if (s >= 85) return { label:'Strong Financial Health', tag:'LOW RISK', color:'#1e8449' };
+  if (s >= 70) return { label:'Adequate Financial Health', tag:'MODERATE RISK', color:'#2196a3' };
+  if (s >= 50) return { label:'Fair — Review Areas Identified', tag:'ELEVATED RISK', color:'#d68910' };
+  if (s >= 30) return { label:'Weak — Discussion Required', tag:'HIGH RISK', color:'#e67e22' };
+  return { label:'Critical Concerns — Immediate Review', tag:'CRITICAL', color:'#c0392b' };
+}
+
+// ════ NARRATIVE ════
+function buildNarrative(org, data, ratios, profile, rating) {
+  const { currentRatio, reserveMonths, restrictionPct, avgMonthlyExp, totalNetAssets } = ratios;
+  const { threshCurrent, threshReserve, threshRestriction } = profile;
+  const doc = docLabels[data.docType] || 'financial documents';
+  const fy = data.fyEnd || 'the most recent fiscal year';
+  const sym = currSymbol();
+
+  // Para 1: framing
+  const p1 = `Based on ${doc} for the fiscal year ending ${fy}, ${org} presents a composite financial health score of <strong>${data.score}/100</strong> — reflecting a <strong>${rating.label.toLowerCase()}</strong> profile against this evaluation's configured thresholds. Per Grant Guardian's design, this score is intended to surface areas for conversation, not render a funding verdict. <span class="citation" title="Source: Statement of Financial Position + Statement of Activities">FP + SA</span>`;
+
+  // Para 2: liquidity
+  let p2;
+  if (currentRatio === null) {
+    p2 = `<strong>Liquidity (Current Ratio):</strong> Insufficient data provided to calculate this ratio. Program officer should request a complete Statement of Financial Position distinguishing current from non-current assets and liabilities.`;
+  } else if (currentRatio >= threshCurrent * 1.5) {
+    p2 = `<strong>Liquidity position is strong.</strong> The Current Ratio of <strong>${fmtD(currentRatio)}</strong> — ${sym}${fmt(data.currentAssets)} in current assets against ${sym}${fmt(data.currentLiabilities)} in current liabilities — substantially exceeds the configured ${threshCurrent}x threshold. <span class="citation" title="Current Ratio = Current Assets ÷ Current Liabilities. Source: Statement of Financial Position">Current Ratio</span> The organization demonstrates a solid capacity to meet near-term obligations. No liquidity flag raised.`;
+  } else if (currentRatio >= threshCurrent) {
+    p2 = `<strong>Liquidity is adequate but bears monitoring.</strong> The Current Ratio of <strong>${fmtD(currentRatio)}</strong> meets the configured ${threshCurrent}x threshold, with ${sym}${fmt(data.currentAssets)} in current assets versus ${sym}${fmt(data.currentLiabilities)} in current liabilities. <span class="citation" title="Current Ratio = Current Assets ÷ Current Liabilities">Current Ratio</span> The organization can cover its short-term obligations. Limited headroom above threshold warrants monitoring in subsequent reporting periods.`;
+  } else if (currentRatio >= threshCurrent * 0.75) {
+    p2 = `<strong>Liquidity is below threshold and warrants discussion.</strong> The Current Ratio of <strong>${fmtD(currentRatio)}</strong> falls below the configured minimum of ${threshCurrent}x (${sym}${fmt(data.currentAssets)} current assets vs. ${sym}${fmt(data.currentLiabilities)} current liabilities). <span class="citation" title="Current Ratio = Current Assets ÷ Current Liabilities">Current Ratio</span> Program officer should inquire about near-term cash flow management, any upcoming large payables, and whether the organization maintains a line of credit.`;
+  } else {
+    p2 = `<strong>Liquidity is a material concern requiring direct conversation.</strong> The Current Ratio of <strong>${fmtD(currentRatio)}</strong> is significantly below the configured ${threshCurrent}x threshold (${sym}${fmt(data.currentAssets)} vs. ${sym}${fmt(data.currentLiabilities)}). <span class="citation" title="Current Ratio = Current Assets ÷ Current Liabilities">Current Ratio</span> This level of near-term liquidity constraint warrants direct conversation with organizational leadership and the board's finance committee before any grant commitment is made.`;
+  }
+
+  // Para 3: reserves
+  let p3;
+  if (reserveMonths === null) {
+    p3 = `<strong>Cash Reserves (Cash Reserve Ratio):</strong> Insufficient data to calculate. Total expenses or liquid asset data were not provided. Program officer should request full Statement of Activities and unrestricted cash balances.`;
+  } else if (reserveMonths >= threshReserve * 1.5) {
+    p3 = `<strong>Operating reserves are robust.</strong> The Cash Reserve Ratio of <strong>${fmtD(reserveMonths)} months</strong> — computed from ${sym}${fmt(data.unrestrictedCash + data.liquidInvestments)} in liquid unrestricted funds against an average monthly expense run-rate of ${sym}${fmt(avgMonthlyExp)} — substantially exceeds the configured ${threshReserve}-month threshold. <span class="citation" title="(Unrestricted Cash + Liquid Investments) ÷ Avg. Monthly Expenses">Reserve Ratio</span> The organization can absorb significant revenue disruption or pursue strategic opportunities without credit dependency.`;
+  } else if (reserveMonths >= threshReserve) {
+    p3 = `<strong>Operating reserves are adequate.</strong> The Cash Reserve Ratio of <strong>${fmtD(reserveMonths)} months</strong> meets the configured ${threshReserve}-month minimum. Liquid unrestricted funds of ${sym}${fmt(data.unrestrictedCash + data.liquidInvestments)} support average monthly expenses of ${sym}${fmt(avgMonthlyExp)}. <span class="citation" title="(Unrestricted Cash + Liquid Investments) ÷ Avg. Monthly Expenses">Reserve Ratio</span> The organization demonstrates reasonable operating stability.`;
+  } else if (reserveMonths >= 1) {
+    p3 = `<strong>Operating reserves are below threshold.</strong> The Cash Reserve Ratio of <strong>${fmtD(reserveMonths)} months</strong> falls short of the configured ${threshReserve}-month minimum. Liquid unrestricted assets of ${sym}${fmt(data.unrestrictedCash + data.liquidInvestments)} cover only ${fmtD(reserveMonths)} months of operating expenses (avg. ${sym}${fmt(avgMonthlyExp)}/month). <span class="citation" title="(Unrestricted Cash + Liquid Investments) ÷ Avg. Monthly Expenses">Reserve Ratio</span> Program officer should explore reserve policy, revenue pipeline, and contingency planning with the organization.`;
+  } else {
+    p3 = `<strong>Operating reserves are critically low.</strong> The Cash Reserve Ratio of <strong>${fmtD(reserveMonths)} months</strong> indicates less than one month of unrestricted operating liquidity. With ${sym}${fmt(data.unrestrictedCash + data.liquidInvestments)} in liquid unrestricted assets against ${sym}${fmt(avgMonthlyExp)} in average monthly expenses, the organization faces significant financial fragility. <span class="citation" title="(Unrestricted Cash + Liquid Investments) ÷ Avg. Monthly Expenses">Reserve Ratio</span> Immediate discussion with senior leadership and board finance committee is warranted.`;
+  }
+
+  // Para 4: restriction
+  let p4;
+  if (restrictionPct === null) {
+    p4 = `<strong>Donor Restriction Profile:</strong> Insufficient data to calculate. Net asset breakdown by restriction type was not provided.`;
+  } else {
+    const rStr = fmtD(restrictionPct, 1);
+    if (restrictionPct <= threshRestriction * 0.5) {
+      p4 = `<strong>Flexibility profile is strong.</strong> Donor-restricted net assets represent <strong>${rStr}%</strong> of total net assets — well below the configured ${threshRestriction}% threshold. <span class="citation" title="Donor-Restricted Net Assets ÷ (Total Assets − Total Liabilities)">Restriction Ratio</span> The organization has substantial discretionary resources, supporting responsive deployment and operational flexibility.`;
+    } else if (restrictionPct <= threshRestriction) {
+      p4 = `<strong>Restriction profile is within threshold.</strong> Donor-restricted net assets represent <strong>${rStr}%</strong> of total net assets, within the configured ${threshRestriction}% maximum. <span class="citation" title="Donor-Restricted Net Assets ÷ (Total Assets − Total Liabilities)">Restriction Ratio</span> Operational flexibility is maintained. Program officer may wish to understand the composition and expected release timeline of restricted funds.`;
+    } else if (restrictionPct <= threshRestriction * 1.25) {
+      p4 = `<strong>Restriction profile is elevated and warrants context.</strong> At <strong>${rStr}%</strong> of total net assets, donor-restricted assets exceed the configured ${threshRestriction}% threshold. <span class="citation" title="Donor-Restricted Net Assets ÷ (Total Assets − Total Liabilities)">Restriction Ratio</span> This may reflect strong multi-year fundraising success (e.g., a large federal award) or may signal reduced operational flexibility. Program officer should ask for the composition of restrictions and expected release schedule.`;
+    } else {
+      p4 = `<strong>High restriction ratio is a significant flag for discussion.</strong> At <strong>${rStr}%</strong> of total net assets, the donor-restricted proportion significantly exceeds the configured ${threshRestriction}% threshold. <span class="citation" title="Donor-Restricted Net Assets ÷ (Total Assets − Total Liabilities)">Restriction Ratio</span> While not disqualifying — organizations with major multi-year grants or endowments often carry high restriction ratios — this signals limited unrestricted discretionary capacity. Direct inquiry into restriction types, durations, and conditions is recommended.`;
+    }
+  }
+
+  // Para 5: operating context
+  let p5 = '';
+  if (data.totalRevenue > 0 && data.totalExpenses > 0) {
+    const surplus = data.totalRevenue - data.totalExpenses;
+    const marginPct = (surplus / data.totalRevenue) * 100;
+    const grantTotal = data.govGrants + data.privGrants;
+    const grantConc = (grantTotal / data.totalRevenue) * 100;
+
+    p5 = surplus >= 0
+      ? `<strong>Operating context:</strong> The organization reported a net surplus of ${sym}${fmt(surplus)} (${fmtD(Math.abs(marginPct), 1)}% margin) for the period, indicating revenue exceeded expenditure. <span class="citation" title="Source: Statement of Activities">SA</span>`
+      : `<strong>Operating context:</strong> The organization reported a net operating deficit of ${sym}${fmt(Math.abs(surplus))} (${fmtD(Math.abs(marginPct), 1)}% deficit rate). Program officer should clarify whether this reflects a planned drawdown of reserves or an unplanned revenue shortfall. <span class="citation" title="Source: Statement of Activities">SA</span>`;
+
+    if (grantConc > 0) {
+      p5 += ` Grant revenue (government + foundation) represents approximately <strong>${fmtD(grantConc, 1)}%</strong> of total revenue — ${grantConc > 75 ? 'a high concentration that introduces meaningful revenue risk if key funders change priorities' : grantConc > 50 ? 'a moderate grant dependency' : 'suggesting a reasonably diversified revenue base'}.`;
+    }
+  }
+
+  // Unaudited warning
+  let p6 = '';
+  if (data.docType === 'unaudited') {
+    p6 = `<strong>Document quality note:</strong> These figures are sourced from management-prepared (unaudited) statements. AI extraction confidence is lower for non-standard formats. Program officer should verify key figures against source documents and consider requesting CPA-reviewed or audited statements, particularly for any figures that appear inconsistent with sector norms.`;
+  }
+
+  return [p1, p2, p3, p4, p5, p6].filter(Boolean).map(p => `<p>${p}</p>`).join('');
+}
+
+// ════ FLAGS ════
+function buildFlags(ratios, profile, data) {
+  const { currentRatio, reserveMonths, restrictionPct } = ratios;
+  const { threshCurrent, threshReserve, threshRestriction } = profile;
+  const flags = [];
+  const convos = [];
+
+  // Current ratio
+  if (currentRatio !== null) {
+    if (currentRatio < threshCurrent * 0.5) {
+      flags.push({ t:'red', i:'🔴', title:'Critical Liquidity Concern', body:`Current Ratio of ${fmtD(currentRatio)} is critically below the ${threshCurrent}x threshold. Near-term ability to meet obligations is significantly impaired.` });
+      convos.push(`"Can you walk us through your current cash flow management and what contingency plans are in place for near-term obligations?"`);
+    } else if (currentRatio < threshCurrent) {
+      flags.push({ t:'amber', i:'🟡', title:'Liquidity Below Threshold', body:`Current Ratio of ${fmtD(currentRatio)} falls below the configured ${threshCurrent}x minimum. Explore short-term liability composition and cash flow management practices.` });
+      convos.push(`"Your current ratio is below our threshold — can you tell us about your near-term cash flow picture and how you're managing current obligations?"`);
+    } else {
+      flags.push({ t:'green', i:'✅', title:'Liquidity Meets Threshold', body:`Current Ratio of ${fmtD(currentRatio)} meets or exceeds the configured ${threshCurrent}x threshold.` });
+    }
+  }
+
+  // Reserve
+  if (reserveMonths !== null) {
+    if (reserveMonths < 1) {
+      flags.push({ t:'red', i:'🔴', title:'Critical Reserve Shortfall — Immediate Discussion Required', body:`Less than 1 month of liquid, unrestricted operating reserves (${fmtD(reserveMonths)} months). This is a high-priority item for board and leadership discussion before any grant commitment.` });
+      convos.push(`"You have less than one month of unrestricted operating reserves. What is your contingency plan if a major revenue source is delayed or interrupted?"`);
+    } else if (reserveMonths < threshReserve) {
+      flags.push({ t:'amber', i:'🟡', title:'Cash Reserves Below Threshold', body:`${fmtD(reserveMonths)}-month reserve falls below the configured ${threshReserve}-month minimum. Ask about reserve policy, revenue pipeline, and any credit facilities available.` });
+      convos.push(`"Your cash reserves are below our ${threshReserve}-month benchmark. What's your current reserve policy, and what steps are you taking to build operating cushion?"`);
+    } else {
+      flags.push({ t:'green', i:'✅', title:'Cash Reserves Adequate', body:`${fmtD(reserveMonths)}-month reserve meets the configured ${threshReserve}-month minimum.` });
+    }
+  }
+
+  // Restriction
+  if (restrictionPct !== null) {
+    if (restrictionPct > threshRestriction * 1.25) {
+      flags.push({ t:'amber', i:'🟡', title:'High Donor-Restriction Ratio — Context Required', body:`${fmtD(restrictionPct,1)}% of net assets are donor-restricted, significantly above the ${threshRestriction}% threshold. Request breakdown of restriction types and anticipated release timeline.` });
+      convos.push(`"A large proportion of your net assets are donor-restricted. Can you help us understand the composition — purpose restrictions vs. endowment — and when you expect those funds to be released?"`);
+    } else if (restrictionPct > threshRestriction) {
+      flags.push({ t:'amber', i:'🟡', title:'Restriction Ratio Above Threshold', body:`${fmtD(restrictionPct,1)}% of net assets are donor-restricted — above the configured ${threshRestriction}% maximum. Ask for composition and release timeline.` });
+      convos.push(`"Your restricted-to-total net asset ratio is above our threshold. Can you clarify the nature of those restrictions and the expected timeline?"`);
+    } else {
+      flags.push({ t:'green', i:'✅', title:'Restriction Ratio Within Range', body:`Donor-restricted net assets at ${fmtD(restrictionPct,1)}% of total net assets — within the configured ${threshRestriction}% threshold.` });
+    }
+  }
+
+  // Unaudited
+  if (data.docType === 'unaudited') {
+    flags.push({ t:'info', i:'ℹ️', title:'Unaudited Financials Submitted', body:'Management-prepared financials are less reliable for AI extraction. Program officer should verify figures against source documents and consider requesting audited statements.' });
+    convos.push(`"We note these are unaudited financials. Do you have CPA-reviewed statements, or are audited financials forthcoming?"`);
+  }
+
+  // Deficit
+  if (data.totalRevenue > 0 && data.totalExpenses > 0) {
+    const deficit = data.totalExpenses - data.totalRevenue;
+    if (deficit > 0 && (deficit / data.totalRevenue) > 0.1) {
+      flags.push({ t:'amber', i:'🟡', title:'Operating Deficit Flagged', body:`Expenses exceed revenue by ${fmtCur(deficit)} (${fmtD((deficit/data.totalRevenue)*100,1)}% deficit rate). Clarify whether this is a planned reserve drawdown or an unplanned shortfall.` });
+      convos.push(`"Your expenses exceeded revenue this year. Was this a planned decision — perhaps drawing down reserves for a strategic purpose — or does it reflect a revenue gap you're working to close?"`);
+    }
+  }
+
+  // Revenue concentration
+  if (data.totalRevenue > 0) {
+    const grantConc = ((data.govGrants + data.privGrants) / data.totalRevenue) * 100;
+    if (grantConc > 80) {
+      flags.push({ t:'info', i:'ℹ️', title:`High Grant Revenue Concentration (${fmtD(grantConc,1)}%)`, body:'Over 80% of revenue derives from grants. Significant concentration risk if key funders shift priorities. Inquire about diversification strategy.' });
+      convos.push(`"You're heavily dependent on grant revenue. What's your strategy for revenue diversification, and how do you manage the risk of grant funding shifts?"`);
+    }
+  }
+
+  return { flags, convos };
+}
+
+// ════ MAIN ANALYSIS ════
+function runAnalysis() {
+  const ws = num('wCurrent') + num('wReserve') + num('wRestriction');
+  if (Math.abs(ws - 100) > 1) {
+    $('weightWarn2').style.display = 'block';
+    return;
+  }
+  $('weightWarn2').style.display = 'none';
+
+  const data = {
+    orgName: $('orgName').value.trim() || 'Organization (Name Not Provided)',
+    fyEnd: $('fyEnd').value.trim(),
+    docType: $('docType').value,
+    programArea: $('programArea').value.trim() || '—',
+    currency: $('currency').value,
+    currentAssets: num('currentAssets'),
+    currentLiabilities: num('currentLiabilities'),
+    totalAssets: num('totalAssets'),
+    totalLiabilities: num('totalLiabilities'),
+    unrestrictedCash: num('unrestrictedCash'),
+    liquidInvestments: num('liquidInvestments'),
+    restrictedNetAssets: num('restrictedNetAssets'),
+    unrestrictedNetAssets: num('unrestrictedNetAssets'),
+    totalExpenses: num('totalExpenses'),
+    totalRevenue: num('totalRevenue'),
+    govGrants: num('govGrants'),
+    privGrants: num('privGrants'),
+    programRevenue: num('programRevenue'),
+    indivContrib: num('indivContrib'),
+  };
+
+  const profile = {
+    threshCurrent: num('threshCurrent'),
+    threshReserve: num('threshReserve'),
+    threshRestriction: num('threshRestriction'),
+    wCurrent: num('wCurrent'),
+    wReserve: num('wReserve'),
+    wRestriction: num('wRestriction'),
+  };
+
+  // Compute ratios
+  const currentRatio = data.currentLiabilities > 0 ? data.currentAssets / data.currentLiabilities : null;
+  const avgMonthlyExp = data.totalExpenses > 0 ? data.totalExpenses / 12 : null;
+  const liquidFunds = data.unrestrictedCash + data.liquidInvestments;
+  const reserveMonths = avgMonthlyExp > 0 ? liquidFunds / avgMonthlyExp : null;
+  const totalNetAssets = data.totalAssets - data.totalLiabilities;
+  const restrictionPct = totalNetAssets > 0 ? (data.restrictedNetAssets / totalNetAssets) * 100 : null;
+
+  if (currentRatio === null && reserveMonths === null && restrictionPct === null) {
+    alert('Please enter financial data in Steps 2 and 3 before generating an analysis.');
+    return;
+  }
+
+  // Score
+  const sC = currentRatio !== null ? scoreCurrent(currentRatio, profile.threshCurrent) : 50;
+  const sR = reserveMonths !== null ? scoreReserve(reserveMonths, profile.threshReserve) : 50;
+  const sX = restrictionPct !== null ? scoreRestriction(restrictionPct, profile.threshRestriction) : 50;
+  const composite = Math.round((sC * profile.wCurrent + sR * profile.wReserve + sX * profile.wRestriction) / 100);
+  data.score = composite;
+
+  const ratios = { currentRatio, reserveMonths, restrictionPct, avgMonthlyExp: avgMonthlyExp||0, totalNetAssets };
+  const rating = ratingFromScore(composite);
+
+  // ── Populate header ──
+  $('rOrgName').textContent = data.orgName;
+  $('rFY').textContent = data.fyEnd || 'Not specified';
+  $('rDocType').textContent = docLabels[data.docType];
+  $('rProgram').textContent = data.programArea;
+  $('rCurrency').textContent = data.currency;
+  $('rDate').textContent = new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+
+  // ── Score panel ──
+  $('rScore').textContent = composite;
+  $('rScoreBar').style.width = composite + '%';
+  $('rRating').textContent = rating.label;
+  $('rRiskChip').textContent = rating.tag;
+  $('rRiskChip').style.borderColor = rating.color;
+
+  // ── Current Ratio ──
+  if (currentRatio !== null) {
+    $('rCurrent').textContent = fmtD(currentRatio);
+    const ok = currentRatio >= profile.threshCurrent, near = currentRatio >= profile.threshCurrent * 0.75;
+    $('rCurrentPill').innerHTML = pillHtml(ok ? 'green' : near ? 'amber' : 'red', ok ? 'Meets threshold' : near ? 'Near threshold' : 'Below threshold');
+    $('rCurrentThresh').textContent = `Threshold: ≥ ${profile.threshCurrent}x | Weight: ${profile.wCurrent}%`;
+  } else {
+    $('rCurrent').textContent = 'N/A'; $('rCurrentPill').innerHTML = pillHtml('gray','Insufficient data');
+    $('rCurrentThresh').textContent = '';
+  }
+
+  // ── Reserve ──
+  if (reserveMonths !== null) {
+    $('rReserve').textContent = fmtD(reserveMonths) + ' mo';
+    const ok = reserveMonths >= profile.threshReserve, near = reserveMonths >= profile.threshReserve * 0.5;
+    $('rReservePill').innerHTML = pillHtml(ok ? 'green' : near ? 'amber' : 'red', ok ? 'Meets threshold' : near ? 'Near threshold' : 'Below threshold');
+    $('rReserveThresh').textContent = `Threshold: ≥ ${profile.threshReserve} months | Weight: ${profile.wReserve}%`;
+  } else {
+    $('rReserve').textContent = 'N/A'; $('rReservePill').innerHTML = pillHtml('gray','Insufficient data');
+    $('rReserveThresh').textContent = '';
+  }
+
+  // ── Restriction ──
+  if (restrictionPct !== null) {
+    $('rRestriction').textContent = fmtD(restrictionPct, 1) + '%';
+    const ok = restrictionPct <= profile.threshRestriction, near = restrictionPct <= profile.threshRestriction * 1.25;
+    $('rRestrictionPill').innerHTML = pillHtml(ok ? 'green' : near ? 'amber' : 'red', ok ? 'Within threshold' : near ? 'Slightly elevated' : 'Above threshold');
+    $('rRestrictionThresh').textContent = `Threshold: ≤ ${profile.threshRestriction}% | Weight: ${profile.wRestriction}%`;
+  } else {
+    $('rRestriction').textContent = 'N/A'; $('rRestrictionPill').innerHTML = pillHtml('gray','Insufficient data');
+    $('rRestrictionThresh').textContent = '';
+  }
+
+  // ── Narrative ──
+  $('rNarrative').innerHTML = buildNarrative(data.orgName, data, ratios, profile, rating);
+
+  // ── Flags & conversation starters ──
+  const { flags, convos } = buildFlags(ratios, profile, data);
+  $('rFlags').innerHTML = flags.length === 0
+    ? '<p style="color:var(--green);font-style:italic;font-size:0.88rem">No significant flags identified under the current risk profile configuration.</p>'
+    : flags.map(f => `<div class="flag-item flag-${f.t}"><span class="flag-icon">${f.i}</span><div class="flag-text"><strong>${f.title}</strong>${f.body}</div></div>`).join('');
+
+  if (convos.length > 0) {
+    $('rConversation').style.display = 'block';
+    $('rConvoList').innerHTML = convos.map(c => `<li>${c}</li>`).join('');
+  } else {
+    $('rConversation').style.display = 'none';
+  }
+
+  // ── Extraction log ──
+  const logFields = [
+    ['currentAssets', data.currentAssets, 'Current Ratio'],
+    ['currentLiabilities', data.currentLiabilities, 'Current Ratio'],
+    ['totalAssets', data.totalAssets, 'Net Assets; Restriction Ratio'],
+    ['totalLiabilities', data.totalLiabilities, 'Net Assets; Restriction Ratio'],
+    ['unrestrictedCash', data.unrestrictedCash, 'Cash Reserve Ratio'],
+    ['liquidInvestments', data.liquidInvestments, 'Cash Reserve Ratio'],
+    ['restrictedNetAssets', data.restrictedNetAssets, 'Donor-Restriction Ratio'],
+    ['unrestrictedNetAssets', data.unrestrictedNetAssets, 'Reference'],
+    ['totalExpenses', data.totalExpenses, 'Avg. Monthly Expenses → Reserve Ratio'],
+    ['totalRevenue', data.totalRevenue, 'Revenue Context'],
+    ['govGrants', data.govGrants, 'Revenue Concentration'],
+    ['privGrants', data.privGrants, 'Revenue Concentration'],
+    ['programRevenue', data.programRevenue, 'Revenue Diversification'],
+    ['indivContrib', data.indivContrib, 'Revenue Diversification'],
+  ];
+  $('rExtTable').innerHTML = logFields.map(([fid, val, use]) => {
+    const [doc, page] = docRefs[fid];
+    return `<tr>
+      <td><div class="v-field">${fieldLabels[fid]}</div></td>
+      <td class="v-val">${fmtCur(val)}</td>
+      <td><div style="font-size:0.78rem;font-weight:600">${doc}</div><div class="v-source">${page}</div></td>
+      <td style="font-size:0.78rem;color:var(--muted)">${use}</td>
+      <td><span class="v-status v-ai">🤖 AI Extracted</span></td>
+    </tr>`;
+  }).join('');
+
+  // Show & scroll
+  $('report').style.display = 'block';
+  setTimeout(() => $('report').scrollIntoView({behavior:'smooth', block:'start'}), 120);
+}
+
+function resetAll() {
+  ['orgName','fyEnd','programArea','currentAssets','currentLiabilities','totalAssets','totalLiabilities',
+   'unrestrictedCash','liquidInvestments','restrictedNetAssets','unrestrictedNetAssets',
+   'totalExpenses','totalRevenue','govGrants','privGrants','programRevenue','indivContrib'].forEach(id => $(id).value = '');
+  $('docType').value = '990_audited';
+  $('currency').value = 'USD';
+  $('orgType').value = 'established';
+  setProfile('established');
+  $('report').style.display = 'none';
+  // Reset step nums
+  for (let i = 1; i <= 5; i++) {
+    const el = $('sn' + i);
+    if (el) el.textContent = i;
+    if ($('tab-' + i)) $('tab-' + i).classList.remove('done');
+  }
+  goStep(1);
+}
+</script>
+</body>
+</html>

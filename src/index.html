@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions. Independent Grant Guardian explorer by Wayan Vota.">
+  <meta name="color-scheme" content="light">
+  <title>Grant Guardian · Financial ratio explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar"><a class="brand" href="#"><span class="mark" aria-hidden="true">g.</span>Grant Guardian<span class="edition">by Wayan Vota</span></a><a class="method-link" href="#method">How it works <span aria-hidden="true">↗</span></a></header>
+  <main id="main">
+    <div class="intro"><div><p class="eyebrow">A financial ratio explorer for nonprofits</p><h1>Know the numbers.<br><span class="serif">Bring the context.</span></h1><p class="lede">See what three financial ratios say about your organization, and which questions they leave unanswered.</p></div><aside class="independent"><span class="small-label">Independent tool</span><p>Inspired by PJMF’s public Grant Guardian documentation. Not affiliated with PJMF and does not reproduce any funder’s assessment.</p><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">Read PJMF’s documentation ↗</a></aside></div>
+    <div class="workspace">
+      <aside class="rail"><nav aria-label="Analysis steps"><button class="step active" data-step="1" aria-current="step"><span>01</span><b>Your figures</b><small>Enter and verify</small></button><button class="step" data-step="2"><span>02</span><b>Your assumptions</b><small>Set a comparison</small></button><button class="step" data-step="3"><span>03</span><b>Your report</b><small>Ratios with context</small></button></nav><div class="local-note"><span class="status-dot"></span><b>Stays in this browser</b><p>No uploads, accounts, or AI calls. Export a copy to save your work. Refreshing clears unsaved entries.</p></div><div class="rail-actions"><button class="text-button" id="sample">Try fictional figures ↗</button><button class="text-button" id="import">Open a saved analysis ↗</button><input id="import-file" type="file" accept=".json,application/json" hidden></div></aside>
+      <div class="canvas">
+        <p id="status" class="status-message" role="status" aria-live="polite"></p>
+        <section id="step-1" class="panel" aria-labelledby="title-1">
+          <div class="section-top"><p class="eyebrow">01 / Enter and verify</p><h2 id="title-1" tabindex="-1">Start with the source.</h2><p>Use one fiscal period and one currency. Leave unknown figures blank. Enter 0 only when your records establish a true zero.</p></div>
+          <div class="metadata">
+            <label>Organization<input id="organization" maxlength="180" placeholder="Your organization’s name" autocomplete="organization"></label>
+            <label>Fiscal period end<input id="fiscalEnd" type="date"></label>
+            <label>Period length (months)<input id="months" type="number" min="0.01" max="24" step="any" value="12"></label>
+            <label>Currency<select id="currency"><option>USD</option><option>EUR</option><option>GBP</option><option>CAD</option><option>AUD</option><option>Other</option></select><small>Label only. No currency conversion.</small></label>
+            <label class="wide">Document title / version<input id="document" maxlength="300" placeholder="e.g. Audited financial statements, FY2025, final"></label>
+            <label class="wide">Source guidance<select id="formYear"><option value="2025">2025 Form 990 and financial statements</option><option value="other">Other year or accounting presentation</option></select><small>Suggested locations are guidance, not citations to your records.</small></label>
+          </div>
+          <div class="verification-note"><b>A figure is verified when you check it.</b><p>Record its page or schedule, then confirm it matches the source. Changing a figure or reference clears its confirmation. Document title and fiscal date are also required for a verified report.</p></div>
+          <div id="fields"></div>
+          <label class="context-label">What else should a reviewer know?<textarea id="notes" rows="4" maxlength="8000" placeholder="Explain award timing, restriction releases, planned reserve use, seasonal receipts, or one-time costs."></textarea><small>These notes travel with the report. They do not change the calculations.</small></label>
+          <div class="panel-footer"><span class="small-label">Manual inputs · Transparent formulas</span><button class="primary" data-next="2">Set assumptions <span aria-hidden="true">→</span></button></div>
+        </section>
+        <section id="step-2" class="panel" aria-labelledby="title-2" hidden>
+          <div class="section-top"><p class="eyebrow">02 / Set a comparison</p><h2 id="title-2" tabindex="-1">Make the assumptions visible.</h2><p>These scenarios are examples for exploration. They are not validated standards for nonprofit categories or any funder’s settings.</p></div>
+          <div id="scenario-choices" class="scenario-choices"></div>
+          <div class="setting-grid"><label>Minimum current ratio<input id="threshold-current" type="number" step="any" min="0.01"></label><label>Minimum reserve months<input id="threshold-reserve" type="number" step="any" min="0.01"></label><label>Maximum restricted net assets (%)<input id="threshold-restriction" type="number" step="any" min="0" max="100"></label></div>
+          <div id="parameter-origin" class="explanation"></div>
+          <div class="score-option"><label class="check-label"><input id="showScore" type="checkbox"><span><b>Include an illustrative index</b><small>Optional. This app’s formula is not PJMF’s scoring method and cannot predict a grant decision.</small></span></label></div>
+          <fieldset id="weights" hidden><legend>Index weights (must total 100%)</legend><div class="setting-grid"><label>Current ratio (%)<input id="weight-0" type="number" min="0" max="100" step="any"></label><label>Reserve months (%)<input id="weight-1" type="number" min="0" max="100" step="any"></label><label>Restricted assets (%)<input id="weight-2" type="number" min="0" max="100" step="any"></label></div><p id="weight-total"></p></fieldset>
+          <div id="setting-errors" role="alert"></div>
+          <label class="context-label">Assumption source or rationale<textarea id="scenario-note" rows="3" maxlength="3000" placeholder="Optional: name the funder policy or explain the settings you chose."></textarea></label>
+          <div class="panel-footer"><button class="secondary" data-next="1">Back to figures</button><button class="primary" data-next="3">See your report <span aria-hidden="true">→</span></button></div>
+        </section>
+        <section id="step-3" class="panel report" aria-labelledby="title-3" hidden>
+          <div class="section-top report-top"><div><p class="eyebrow">03 / Financial ratio report</p><h2 id="title-3" tabindex="-1">Your figures, in context.</h2><p id="report-subtitle"></p></div><div class="report-tools"><button class="secondary" id="export">Save analysis</button><button class="primary" id="print">Print / PDF</button></div></div>
+          <div id="report-content"></div>
+          <div class="panel-footer"><button class="secondary" data-next="1">Edit source figures</button><button class="secondary" data-next="2">Change assumptions</button></div>
+        </section>
+      </div>
+    </div>
+    <section id="method" class="method"><p class="eyebrow">The method, in plain sight</p><h2>Useful questions.<br><span class="serif">No automatic verdicts.</span></h2><div class="method-columns"><div><h3>Three ratios</h3><p>Current assets ÷ current liabilities. Available unrestricted cash and liquid investments ÷ average monthly expenses. Donor-restricted net assets ÷ total net assets.</p><p>Reserve coverage assumes the entered period’s average spending is representative. It does not predict future cash flow.</p></div><div><h3>Explicit assumptions</h3><p>PJMF publishes examples of a 1.0 or 0.5 current-ratio threshold. Other thresholds, weights, and the optional index here are this simulator’s assumptions. You can change them and compare the result.</p><p>Missing evidence stays missing. No risk grade or funding recommendation is produced.</p></div><div><h3>Sources you can check</h3><ul><li><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">PJMF: Grant Guardian documentation ↗</a></li><li><a href="https://www.irs.gov/pub/irs-pdf/f990.pdf" target="_blank" rel="noopener noreferrer">IRS: Form 990 ↗</a></li><li><a href="https://medium.com/patrick-j-mcgovern-foundation/social-responsibility-comes-first-product-development-lessons-from-grant-guardian-3c5fe6916019" target="_blank" rel="noopener noreferrer">PJMF: Product development lessons ↗</a></li></ul><p>Documentation reviewed September 29, 2026. Source guidance in this tool is tied to the 2025 form; the IRS link may later serve a newer edition.</p></div></div></section>
+  </main>
+  <footer class="site-footer"><span>Grant Guardian / Independent explorer</span><span>v2.0.0 · Built by Wayan Vota</span></footer>
+  <dialog id="replace-dialog"><h2>Replace this analysis?</h2><p id="replace-message">Export your current work first if you want to keep it.</p><div class="dialog-actions"><button class="secondary" id="cancel-replace">Keep current work</button><button class="primary" id="confirm-replace">Replace analysis</button></div></dialog>
+  <noscript>This tool requires JavaScript to calculate ratios. All calculations run in your browser.</noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

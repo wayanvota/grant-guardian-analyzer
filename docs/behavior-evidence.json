@@ -1,0 +1,37 @@
+{
+  "method": "Execute the public page script with an in-memory DOM stub. These are computation checks, not browser end-to-end tests.",
+  "missingData": {
+    "inputs": {
+      "totalAssets": 100000,
+      "totalLiabilities": 20000
+    },
+    "alerts": [],
+    "score": 63,
+    "rating": "Fair — Review Areas Identified",
+    "currentRatio": "N/A",
+    "reserves": "N/A",
+    "restrictionRatio": "0.0%"
+  },
+  "negativeNetAssets": {
+    "inputs": {
+      "currentAssets": 20000,
+      "currentLiabilities": 10000,
+      "totalAssets": 100000,
+      "totalLiabilities": 120000,
+      "totalExpenses": 12000,
+      "totalRevenue": 12000,
+      "unrestrictedCash": 4000
+    },
+    "alerts": [],
+    "score": 80,
+    "rating": "Adequate Financial Health",
+    "currentRatio": "2.00",
+    "reserves": "4.00 mo",
+    "restrictionRatio": "N/A"
+  },
+  "restrictionCurve": {
+    "threshold": 90,
+    "scoreAt130Percent": 52.94117647058823,
+    "scoreAt160Percent": 105.88235294117646
+  }
+}
