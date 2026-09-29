@@ -4,7 +4,7 @@ Inspired by PJMF’s Grant Guardian, but this is not that
 
 An independent financial ratio explorer for nonprofits, built by Wayan Vota. Enter figures with source references, compare explicit assumptions, and prepare questions for a conversation with a funder.
 
-This repository preserves the publicly served February-era implementation and documents the September 2026 reconstruction, accuracy fixes, and Intercom-inspired redesign. It does **not** claim to recover the missing original Cowork conversation or reproduce PJMF's proprietary assessment.
+This repository contains the application source, documented formulas, research, and validation results.
 
 Published September 29, 2026: [Open Grant Guardian](https://wayan.com/grant-guardian-analyzer.html). See the [deployment record](docs/DEPLOYMENT.md) for verification.
 
@@ -30,7 +30,7 @@ The build produces **`dist/grant-guardian-analyzer.html`**, a standalone HTML fi
 
 ## What changed in v2
 
-- Intercom-inspired cream canvas, black typography, orange brand accent, sharp controls, and responsive layouts. System fonts are used unless the named design fonts are already installed; no font assets are downloaded.
+- Cream background, black typography, orange accent, sharp controls, and responsive layouts. System fonts are used unless the named design fonts are already installed; no font assets are downloaded.
 - Raw ratios and evidence status come first. The optional illustrative score has no risk grade or automatic funding recommendation.
 - Unknown amounts remain unknown. Zero denominators, nonpositive net assets, invalid settings, and inconsistent totals have explicit explanations.
 - Each amount has an editable reference and a user confirmation. Editing values or references clears confirmation. Changes to document, period, currency, or source guidance clear all confirmations.
