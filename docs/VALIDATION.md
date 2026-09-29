@@ -1,5 +1,9 @@
 # Validation record
 
+## Version 2.0.2 · September 29, 2026
+
+Naming and subtitle change only, with navigation wrapping for the longer name. The standalone build, JavaScript syntax, and diff checks passed. Headless Chromium verified the exact heading, subtitle immediately below it, browser title, navigation name, and report version locally and on the live URL. Desktop (1280px) and mobile (390px and 320px) checks found no page-level horizontal overflow; desktop and 390px screenshots were visually inspected. The public HTTPS response matched the build byte for byte. Calculation code was unchanged.
+
 ## Version 2.0.1 · September 29, 2026
 
 - All 23 existing model tests passed. Standalone build, JavaScript syntax, and diff whitespace checks passed. Scoring arithmetic is unchanged.

@@ -1,5 +1,11 @@
 # Changes
 
+## 2.0.2 · September 29, 2026
+
+- Renamed the tool “Grant Guardian - Reverse Engineered” in the page heading, navigation, browser/social titles, footer, report, and README.
+- Added the exact subtitle “Inspired by PJMF’s Grant Guardian, but this is not that” immediately below the heading.
+- Allowed the longer navigation name to wrap on small screens.
+
 ## 2.0.1 · September 29, 2026
 
 - Kept the composite score optional and labeled it “Illustrative score under these settings.”

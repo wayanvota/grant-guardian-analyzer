@@ -1,6 +1,14 @@
 # Publication status
 
-## Current release: 2.0.1 · September 29, 2026
+## Current release: 2.0.2 · September 29, 2026
+
+Published the requested name “Grant Guardian - Reverse Engineered” and subtitle “Inspired by PJMF’s Grant Guardian, but this is not that”. The standalone file was uploaded through the same verified SFTP connection, checked before replacement, and verified byte for byte at the canonical HTTPS URL.
+
+- SHA-256: `666186aa0e43ec8c1242b4ca57f7be27b1042fa07675cd0a44a87758a3d47f55`.
+- Live browser checks confirmed the exact heading, subtitle, navigation name, browser title, and report version. Desktop and 390px/320px mobile layouts had no page-level horizontal overflow.
+- Recovery copy: `archive/2026-09-29-v2.0.1-before-rename.html`, SHA-256 `8d5c8332d41b48c5bb6bdaf1c26edd8eac3c6e67ac3100c839681268eaafdab5`.
+
+## Previous release: 2.0.1 · September 29, 2026
 
 Published the explicitly authorized score-disclosure update over SFTP using the successful upgraded-server connection saved by FileZilla. The Mac was locked, so the transfer used the SFTP client rather than the FileZilla interface. The server’s ED25519 key matched FileZilla’s saved trusted key; strict host checking remained enabled. Credentials were read in memory and were not added to the repository.
 

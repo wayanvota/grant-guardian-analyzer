@@ -1,4 +1,6 @@
-# Grant Guardian Analyzer
+# Grant Guardian - Reverse Engineered
+
+Inspired by PJMF’s Grant Guardian, but this is not that
 
 An independent financial ratio explorer for nonprofits, built by Wayan Vota. Enter figures with source references, compare explicit assumptions, and prepare questions for a conversation with a funder.
 
