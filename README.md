@@ -71,4 +71,8 @@ The [seven featured sources](docs/RESEARCH-CONTEXT.md) explain the documented re
 
 [PJMF's public documentation](https://www.mcgovern.org/our-work/data-solutions/grant-guardian/) names three example indicators and configurable thresholds and weights. [PJMF's product-development account](https://medium.com/patrick-j-mcgovern-foundation/social-responsibility-comes-first-product-development-lessons-from-grant-guardian-3c5fe6916019) describes source review and editing. Financial reference guidance was checked against the [2025 IRS Form 990](https://www.irs.gov/pub/irs-pdf/f990.pdf) on September 29, 2026; that IRS URL can subsequently serve a newer edition.
 
-This project is not affiliated with, endorsed by, or an implementation of the Patrick J. McGovern Foundation's Grant Guardian. No open-source license has been selected for this repository.
+This project is not affiliated with, endorsed by, or an implementation of the Patrick J. McGovern Foundation's Grant Guardian.
+
+## License
+
+[MIT License](LICENSE). Copyright © 2026 Wayan Vota.
