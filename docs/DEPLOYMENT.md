@@ -1,5 +1,20 @@
 # Publication status
 
+## Current release: 2.0.1 · September 29, 2026
+
+Published the explicitly authorized score-disclosure update over SFTP using the successful upgraded-server connection saved by FileZilla. The Mac was locked, so the transfer used the SFTP client rather than the FileZilla interface. The server’s ED25519 key matched FileZilla’s saved trusted key; strict host checking remained enabled. Credentials were read in memory and were not added to the repository.
+
+The prior live file was downloaded and checked against the recorded v2.0.0 hash before upload. The new file was uploaded to a temporary name in the same website directory, downloaded to verify its bytes, and renamed over `grant-guardian-analyzer.html`. No other website file was changed.
+
+- Public URL: https://wayan.com/grant-guardian-analyzer.html
+- Version: 2.0.1
+- SHA-256: `8d5c8332d41b48c5bb6bdaf1c26edd8eac3c6e67ac3100c839681268eaafdab5`
+- The canonical HTTPS response matched the local build byte for byte.
+- Headless Chromium passed the score workflow against the live URL, including optional-off behavior, withholding unverified scores, the 80.5 reference result, the 94 alternate scenario, and withholding a score after editing a confirmed figure.
+- Recovery copy: `archive/2026-09-29-v2.0.0-before-score-disclosure.html`, SHA-256 `a27c7584787ef51fff41b88bfa6bb78a12d98ce3c65515b545547063810b53f3`.
+
+## Previous release: 2.0.0
+
 Published September 29, 2026 using FileZilla, following explicit user authorization.
 
 Live URL: https://wayan.com/grant-guardian-analyzer.html

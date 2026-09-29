@@ -1,5 +1,18 @@
 # Validation record
 
+## Version 2.0.1 · September 29, 2026
+
+- All 23 existing model tests passed. Standalone build, JavaScript syntax, and diff whitespace checks passed. Scoring arithmetic is unchanged.
+- Headless Chromium checked both the production build locally and the live HTTPS page. The score remained absent by default and unavailable for unverified demo figures. Confirming the fictional figures produced 80.5 / 100, with contributions 35, 28, and 17.5. The lower-threshold scenario produced 94 / 100. Editing a confirmed input withheld the score again.
+- Confirmed that the source record precedes the score and that the calculation table includes all three components. No browser page errors occurred.
+- Inspected the desktop score and 390px mobile view. There was no page-level horizontal overflow; wide tables scroll within their containers.
+- Generated a three-page A4 PDF and visually inspected the page containing the score. The score, all six calculation columns, and formulas were legible and stayed together. This replaces the earlier unverified-print limitation for this tested report; other report lengths and browsers were not exhaustively checked.
+- Live HTTPS bytes matched the production build. See `DEPLOYMENT.md` for the hash and recovery copy.
+
+Screenshot: [Score disclosure](screenshots/score-disclosure.png).
+
+## Version 2.0.0 validation history
+
 September 29, 2026. Version 2.0.0.
 
 ## Automated checks

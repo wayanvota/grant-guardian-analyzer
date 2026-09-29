@@ -69,3 +69,7 @@ The old foundation-grant and individual-contribution mappings were unsupported a
 JSON exports include schema and app versions, export time, metadata, entered amounts, references, confirmations, notes, and full scenario settings. They store inputs, not a signed audit record. Imports use an explicit allowlist, validate values and shape, and ignore unrecognized properties. Imported scenario names become “Imported settings”; thresholds and weights remain unchanged.
 
 Reports are rebuilt from the saved inputs by the current application version. This release supports schema version 1. Future method changes need explicit migration/version handling, rather than silently claiming equivalence. Currency is a display label and there is no conversion. User text is escaped before HTML report rendering.
+
+## Score presentation in version 2.0.1
+
+The optional composite is labeled **Illustrative score under these settings**. Ratios and the source record precede it. Its visible calculation table lists each ratio, threshold, component, weight, and contribution. Formulas appear beside the result and in print; the scenario table compares the same inputs under different assumptions. The arithmetic is unchanged. The score is not a validated assessment or a reproduction of PJMF’s score.

@@ -29,12 +29,12 @@ The build produces **`dist/grant-guardian-analyzer.html`**, a standalone HTML fi
 ## What changed in v2
 
 - Intercom-inspired cream canvas, black typography, orange brand accent, sharp controls, and responsive layouts. System fonts are used unless the named design fonts are already installed; no font assets are downloaded.
-- Raw ratios and evidence status come first. The optional illustrative index has no risk grade or automatic funding recommendation.
+- Raw ratios and evidence status come first. The optional illustrative score has no risk grade or automatic funding recommendation.
 - Unknown amounts remain unknown. Zero denominators, nonpositive net assets, invalid settings, and inconsistent totals have explicit explanations.
 - Each amount has an editable reference and a user confirmation. Editing values or references clears confirmation. Changes to document, period, currency, or source guidance clear all confirmations.
 - Corrected 2025 Form 990 guidance. Unsupported revenue-source mappings were removed, along with the unused organization-type control. Currency is explicitly a label, without conversion.
 - Side-by-side scenarios, period-length adjustment, organization context, printable reports, and local JSON export/import.
-- Bounded, monotone index formulas and strict weights. Source-derived facts are distinguished from simulator assumptions.
+- Bounded, monotone score formulas and strict weights. Source-derived facts are distinguished from simulator assumptions.
 
 ## Privacy and scope
 

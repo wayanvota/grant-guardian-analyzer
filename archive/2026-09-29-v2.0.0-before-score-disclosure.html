@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions. Independent Grant Guardian explorer by Wayan Vota.">
+  <meta name="color-scheme" content="light">
+  <title>Grant Guardian · Financial ratio explorer</title>
+  <style>
+@charset "UTF-8";
+:root{--cream:#faf9f6;--ink:#111111;--orange:#ff5600;--oat:#dedbd6;--muted:#626260;--sand:#f0ede7;--red:#9c2525;--green:#24543b;--blue:#213f61;font-family:Saans,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;font-size:16px;line-height:1.5}a{color:inherit;text-underline-offset:4px}button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:default;opacity:.5}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:3px}input,textarea,select{background:#fff;border:1px solid #aaa59c;border-radius:4px;color:var(--ink);padding:11px 12px;width:100%;min-width:0}input[type=checkbox]{width:20px;height:20px;flex-shrink:0;accent-color:var(--ink)}textarea{resize:vertical}input::placeholder,textarea::placeholder{color:#75736d}label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:550}label small{font-weight:400;color:var(--muted);line-height:1.4}h1,h2,h3,p{margin-top:0}h1,h2,h3{font-weight:450;letter-spacing:-.035em;line-height:1.05}h1{font-size:clamp(48px,5.8vw,80px);margin-bottom:24px}h2{font-size:clamp(32px,3vw,44px);margin-bottom:20px}h3{font-size:24px;margin-bottom:14px}p{margin-bottom:16px}.serif{font-family:Serrif,ui-serif,Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.04em}.eyebrow,.small-label{font-family:SaansMono,ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase}.eyebrow{margin-bottom:20px;color:var(--muted)}.topbar{max-width:1440px;margin:auto;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--oat)}.brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:600;text-decoration:none;letter-spacing:-.03em}.mark{background:var(--orange);display:grid;place-items:center;width:36px;height:36px;border-radius:4px;font-family:Georgia,serif;font-size:28px;color:var(--ink);padding-bottom:6px}.edition{margin-left:10px;color:var(--muted);font-size:12px;font-weight:400;letter-spacing:0}.method-link{font-size:14px;text-decoration:none}.method-link span{margin-left:12px}main{max-width:1440px;margin:auto;padding:0 48px}.intro{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:60px;align-items:end;padding:64px 0 56px}.lede{font-size:20px;max-width:600px;line-height:1.45;margin:0;color:#454541}.independent{padding:22px 0 0;border-top:2px solid var(--ink);font-size:13px;color:var(--muted)}.independent .small-label{color:var(--ink);display:block;margin-bottom:12px}.independent p{margin-bottom:12px}.independent a{font-size:12px;color:var(--ink)}.workspace{display:grid;grid-template-columns:218px minmax(0,1fr);border-top:1px solid var(--oat);border-bottom:1px solid var(--oat)}.rail{padding:32px 24px 32px 0;border-right:1px solid var(--oat)}.step{display:grid;grid-template-columns:28px 1fr;width:100%;text-align:left;background:transparent;border:0;border-radius:4px;padding:14px 10px;margin-bottom:8px;color:var(--muted)}.step span{grid-row:span 2;font-size:12px;font-family:ui-monospace,monospace;line-height:26px}.step b{font-weight:550;font-size:15px}.step small{font-size:12px;margin-top:4px}.step.active{background:var(--ink);color:#fff}.step:hover:not(.active){background:var(--sand)}.local-note{margin:44px 10px 0;font-size:12px;color:var(--muted)}.local-note b{font-weight:500;color:var(--ink);font-size:12px}.local-note p{margin-top:10px}.status-dot{background:var(--green);width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:7px}.rail-actions{margin-top:28px}.text-button{background:none;border:0;padding:10px;text-align:left;font-size:12px;text-decoration:underline;text-underline-offset:4px}.canvas{min-width:0;background:#fff}.panel{padding:40px}.section-top{max-width:700px;margin-bottom:32px}.section-top p:not(.eyebrow){color:var(--muted);max-width:650px;font-size:15px}.section-top .eyebrow{margin-bottom:14px}.metadata{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:32px 0}.wide{grid-column:span 2}.verification-note,.explanation{background:var(--sand);border:1px solid var(--oat);border-radius:4px;padding:18px 20px;font-size:13px;margin:28px 0}.verification-note b{font-weight:550}.verification-note p{margin:6px 0 0;color:var(--muted)}.group-title{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);margin:38px 0 0;padding-bottom:14px}.group-title h3{margin:0;font-size:24px}.group-title span{color:var(--muted);font-size:11px}.field-row{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;padding:22px 0;border-bottom:1px solid var(--oat)}.field-row .field-title{font-size:15px;font-weight:550;margin-bottom:5px;display:block}.field-help{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px}.field-controls{display:grid;gap:10px}.field-controls label{font-size:11px;color:var(--muted);gap:4px}.field-controls input{padding:8px 10px;font-size:14px}.field-controls .amount{font-size:19px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.check-label{display:flex;flex-direction:row;align-items:center;gap:10px;font-size:12px!important;font-weight:400;color:var(--ink)!important}.check-label input{margin:0}.optional{font-size:10px;font-weight:400;border:1px solid var(--oat);padding:2px 5px;margin-left:5px;border-radius:4px;white-space:nowrap}.context-label{margin-top:32px}.panel-footer{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:36px;padding-top:24px;border-top:1px solid var(--oat)}.panel-footer .small-label{font-size:10px;color:var(--muted)}.primary,.secondary{padding:12px 17px;border:1px solid var(--ink);border-radius:4px;font-size:14px;line-height:1.4;transition:transform .15s,background .15s,color .15s}.primary{background:var(--ink);color:#fff}.secondary{background:transparent;color:var(--ink)}.primary span{margin-left:20px}.primary:hover,.secondary:hover{transform:scale(1.035);background:var(--cream);color:var(--ink)}.primary:active,.secondary:active{transform:scale(.98)}.scenario-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px 0}.scenario{background:var(--cream);border:1px solid var(--oat);border-radius:4px;padding:16px;text-align:left;font-size:14px}.scenario[aria-pressed=true]{border:2px solid var(--ink);padding:15px;background:var(--sand)}.scenario small{display:block;font-size:11px;margin-top:8px;color:var(--muted)}.setting-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}.setting-grid label{font-size:12px}.score-option{border-block:1px solid var(--oat);padding:22px 0}.score-option .check-label{align-items:flex-start;font-size:15px!important}.score-option small{display:block;max-width:580px;margin-top:6px;font-size:13px}fieldset{border:1px solid var(--oat);margin:24px 0;padding:16px}legend{font-size:13px;padding:0 8px}#weight-total{font-size:13px;margin:0}.error-box,.notice-box{font-size:14px;border:1px solid #dfc2b2;padding:20px;border-radius:4px;margin:20px 0;background:#fff5ed}.error-box{border-color:#cfa5a5;color:var(--red);background:#fff6f6}.error-box ul,.notice-box ul{margin:8px 0 0;padding-left:20px}.error-box li,.notice-box li{margin:5px 0}.status-message:empty{display:none}.status-message{margin:0;padding:16px 40px;background:var(--sand);font-size:14px}.report-top{max-width:none}.report-tools{display:flex;gap:10px;margin-top:20px}.report-identity{font-size:13px;color:var(--muted)}.completeness{display:flex;gap:16px;align-items:center;background:var(--cream);padding:20px;border:1px solid var(--oat);border-radius:4px;margin-bottom:24px}.completeness strong{font-size:30px;font-weight:450;letter-spacing:-.04em;white-space:nowrap}.completeness p{font-size:12px;color:var(--muted);margin:0}.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{border:1px solid var(--oat);border-radius:4px;padding:20px 16px;background:var(--cream)}.metric h3{font-size:16px;letter-spacing:-.02em;min-height:34px;line-height:1.2}.metric .number{font-size:38px;font-weight:400;letter-spacing:-.05em;margin:16px 0 12px;line-height:1}.metric .number small{font-size:13px;letter-spacing:0}.metric p{font-size:12px;color:var(--muted);margin:12px 0 0}.tag{display:inline-block;padding:4px 7px;font-size:10px;border-radius:3px;border:1px solid var(--oat);background:#fff;color:var(--muted)}.tag.met{background:#e8f1eb;color:var(--green);border-color:#c4d6c9}.tag.review{background:#fbecde;color:#754222;border-color:#ddc5ae}.report-section{margin-top:36px}.report-section h3{font-size:24px}.report-section p,.report-section li{font-size:14px;line-height:1.6}.report-section li{margin-bottom:10px}.table-wrap{overflow-x:auto;margin:16px 0;max-width:100%}table{border-collapse:collapse;width:100%;font-size:12px;text-align:left;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid var(--oat);padding:13px 10px;vertical-align:top}th{font-weight:550;background:var(--cream);font-size:11px}th:first-child,td:first-child{padding-left:0}td small{display:block;color:var(--muted);margin-top:5px}.comparison{min-width:490px}.selected-row{background:var(--sand)}.index-box{border:1px solid var(--ink);border-radius:4px;padding:24px;margin-top:24px}.index-box .number{font-size:48px;letter-spacing:-.04em;margin:8px 0}.index-box p{font-size:13px;color:var(--muted);margin-bottom:0}.context-copy{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--cream);border-left:2px solid var(--ink);padding:20px}.report-footnote{font-size:11px;color:var(--muted);margin-top:32px;padding-top:20px;border-top:1px solid var(--oat)}.report-footnote p{margin-bottom:8px}details{border-block:1px solid var(--oat);padding:18px 0;margin-top:28px;font-size:13px}summary{cursor:pointer;font-weight:550}details p{margin:16px 0 0}.method{padding:70px 0}.method h2{font-size:48px;margin-bottom:40px}.method-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}.method-columns h3{font-size:20px}.method-columns p,.method-columns li{font-size:13px;color:var(--muted)}.method-columns ul{padding-left:18px}.method-columns li{margin-bottom:12px}.site-footer{max-width:1440px;margin:auto;border-top:1px solid var(--oat);display:flex;justify-content:space-between;padding:24px 48px;font-size:11px;color:var(--muted)}.skip{position:absolute;left:16px;top:-80px;background:var(--ink);color:white;padding:12px;z-index:5}.skip:focus{top:10px}dialog{border:1px solid var(--ink);border-radius:8px;padding:32px;max-width:500px;width:calc(100% - 32px);background:var(--cream)}dialog h2{font-size:30px}dialog::backdrop{background:#1118}.dialog-actions{display:flex;gap:16px;justify-content:flex-end}.report-subheading{overflow-wrap:anywhere}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}[hidden]{display:none!important}
+@media(min-width:1500px){.intro{padding-top:80px}}@media(max-width:1000px){main{padding:0 28px}.topbar,.site-footer{padding:22px 28px}.intro{gap:32px;grid-template-columns:1fr 240px}.workspace{grid-template-columns:180px minmax(0,1fr)}.rail{padding-right:16px}.panel{padding:28px}.metric-grid{grid-template-columns:1fr}.metric{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.metric h3{min-height:0}.metric .number{grid-column:2;grid-row:1 / span 3;margin:0;align-self:center;text-align:right}.metric .tag{justify-self:start}.metric p{grid-column:1 / -1}.setting-grid{gap:12px}.scenario{padding:12px}.scenario[aria-pressed=true]{padding:11px}}
+@media(max-width:768px){.intro{grid-template-columns:1fr;padding:40px 0;gap:28px}.independent{max-width:550px;display:block}.independent p{margin-top:10px}.workspace{display:block}.rail{border-right:0;padding:18px 0}.rail nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.step{grid-template-columns:1fr;padding:12px;margin:0}.step span{display:none}.step b{font-size:13px}.step small{font-size:11px}.local-note{margin:16px 0 0}.local-note p{display:inline;margin-left:10px}.rail-actions{display:flex;margin-top:10px}.panel{padding:28px}.method-columns{grid-template-columns:1fr;gap:24px}.method{padding:48px 0}.method h2{font-size:40px}.edition{display:none}.panel-footer .small-label{display:none}.metric-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.metric{display:block}.metric h3{min-height:36px}.metric .number{text-align:left;font-size:30px;margin:16px 0}.report-top h2{font-size:36px}}
+@media(max-width:530px){main{padding:0 16px}.topbar{padding:18px 16px}.brand{font-size:18px}.method-link{font-size:12px}.method-link span{margin-left:2px}.intro h1{font-size:46px}.lede{font-size:17px}.eyebrow{font-size:10px}.panel{padding:24px 18px}.metadata{gap:18px;grid-template-columns:1fr}.wide{grid-column:auto}.field-row{grid-template-columns:1fr;gap:10px}.field-help{margin:0}.field-controls{grid-template-columns:1fr}.scenario-choices{grid-template-columns:1fr}.scenario small{display:inline;margin-left:12px}.setting-grid{grid-template-columns:1fr}.metric-grid{grid-template-columns:1fr}.metric{display:grid}.metric h3{min-height:0}.metric .number{font-size:36px;text-align:right;margin:0}.completeness{align-items:flex-start}.completeness strong{font-size:26px}.step{padding:10px 8px}.step b{font-size:12px}.step small{font-size:10px}.local-note p{display:block;margin-left:0}.rail-actions{flex-wrap:wrap}.report-top h2{font-size:32px}.site-footer{padding:20px 16px;display:block}.site-footer span{display:block;margin-bottom:8px}.panel-footer{gap:10px}.primary,.secondary{padding:11px 12px;font-size:12px}.primary span{margin-left:12px}.status-message{padding:16px 18px}.method h2{font-size:36px}.dialog-actions{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.primary:hover,.secondary:hover,.primary:active,.secondary:active{transform:none}}
+@media print{@page{margin:16mm}body{background:#fff;font-size:11px}.topbar,.intro,.rail,.method,.site-footer,.report-tools,.panel-footer,.status-message,.skip{display:none!important}main{max-width:none;padding:0}.workspace{display:block;border:0}.canvas{background:#fff}.panel{display:none!important}.panel.report{display:block!important;padding:0}.report h2{font-size:30px}.report .section-top{margin-bottom:20px}.metric-grid{grid-template-columns:repeat(3,1fr)}.metric{display:block;break-inside:avoid}.metric .number{text-align:left;font-size:28px;margin:10px 0}.metric h3{min-height:0}.metric p{font-size:10px}.report-section h3{font-size:20px}.report-section p,.report-section li{font-size:11px}.table-wrap{overflow:visible}table{font-size:9px;table-layout:fixed}td,th{overflow-wrap:anywhere;padding:8px 5px}.comparison{min-width:0}thead{display:table-header-group}tr,.notice-box,.error-box,.index-box{break-inside:avoid}.report-footnote{font-size:9px}details{display:none}.report .tag{color:#111;border-color:#999}a{color:#111}.completeness{margin-bottom:16px;padding:12px}}
+
+</style>
+    <link rel="canonical" href="https://wayan.com/grant-guardian-analyzer.html" />
+    <link rel="icon" href="https://wayan.com/tool-assets/wayan-favicon.ico" sizes="32x32" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://wayan.com/tool-assets/wayan-favicon.ico" type="image/x-icon" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Wayan Vota AI Tools" />
+    <meta property="og:title" content="Grant Guardian · Financial ratio explorer" />
+    <meta property="og:description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions." />
+    <meta property="og:url" content="https://wayan.com/grant-guardian-analyzer.html" />
+    <meta property="og:image" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
+    <meta property="og:image:secure_url" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
+    <meta property="og:image:alt" content="AI tools built by Wayan. Practical prototypes with visible evidence and human judgment." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@wayan_vota" />
+    <meta name="twitter:title" content="Grant Guardian · Financial ratio explorer" />
+    <meta name="twitter:description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions." />
+    <meta name="twitter:image" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
+    <meta name="twitter:image:alt" content="AI tools built by Wayan. Practical prototypes with visible evidence and human judgment." />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar"><a class="brand" href="#"><span class="mark" aria-hidden="true">g.</span>Grant Guardian<span class="edition">by Wayan Vota</span></a><a class="method-link" href="#method">How it works <span aria-hidden="true">↗</span></a></header>
+  <main id="main">
+    <div class="intro"><div><p class="eyebrow">A financial ratio explorer for nonprofits</p><h1>Know the numbers.<br><span class="serif">Bring the context.</span></h1><p class="lede">See what three financial ratios say about your organization, and which questions they leave unanswered.</p></div><aside class="independent"><span class="small-label">Independent tool</span><p>Inspired by PJMF’s public Grant Guardian documentation. Not affiliated with PJMF and does not reproduce any funder’s assessment.</p><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">Read PJMF’s documentation ↗</a></aside></div>
+    <div class="workspace">
+      <aside class="rail"><nav aria-label="Analysis steps"><button class="step active" data-step="1" aria-current="step"><span>01</span><b>Your figures</b><small>Enter and verify</small></button><button class="step" data-step="2"><span>02</span><b>Your assumptions</b><small>Set a comparison</small></button><button class="step" data-step="3"><span>03</span><b>Your report</b><small>Ratios with context</small></button></nav><div class="local-note"><span class="status-dot"></span><b>Stays in this browser</b><p>No uploads, accounts, or AI calls. Export a copy to save your work. Refreshing clears unsaved entries.</p></div><div class="rail-actions"><button class="text-button" id="sample">Try fictional figures ↗</button><button class="text-button" id="import">Open a saved analysis ↗</button><input id="import-file" type="file" accept=".json,application/json" hidden></div></aside>
+      <div class="canvas">
+        <p id="status" class="status-message" role="status" aria-live="polite"></p>
+        <section id="step-1" class="panel" aria-labelledby="title-1">
+          <div class="section-top"><p class="eyebrow">01 / Enter and verify</p><h2 id="title-1" tabindex="-1">Start with the source.</h2><p>Use one fiscal period and one currency. Leave unknown figures blank. Enter 0 only when your records establish a true zero.</p></div>
+          <div class="metadata">
+            <label>Organization<input id="organization" maxlength="180" placeholder="Your organization’s name" autocomplete="organization"></label>
+            <label>Fiscal period end<input id="fiscalEnd" type="date"></label>
+            <label>Period length (months)<input id="months" type="number" min="0.01" max="24" step="any" value="12"></label>
+            <label>Currency<select id="currency"><option>USD</option><option>EUR</option><option>GBP</option><option>CAD</option><option>AUD</option><option>Other</option></select><small>Label only. No currency conversion.</small></label>
+            <label class="wide">Document title / version<input id="document" maxlength="300" placeholder="e.g. Audited financial statements, FY2025, final"></label>
+            <label class="wide">Source guidance<select id="formYear"><option value="2025">2025 Form 990 and financial statements</option><option value="other">Other year or accounting presentation</option></select><small>Suggested locations are guidance, not citations to your records.</small></label>
+          </div>
+          <div class="verification-note"><b>A figure is verified when you check it.</b><p>Record its page or schedule, then confirm it matches the source. Changing a figure or reference clears its confirmation. Document title and fiscal date are also required for a verified report.</p></div>
+          <div id="fields"></div>
+          <label class="context-label">What else should a reviewer know?<textarea id="notes" rows="4" maxlength="8000" placeholder="Explain award timing, restriction releases, planned reserve use, seasonal receipts, or one-time costs."></textarea><small>These notes travel with the report. They do not change the calculations.</small></label>
+          <div class="panel-footer"><span class="small-label">Manual inputs · Transparent formulas</span><button class="primary" data-next="2">Set assumptions <span aria-hidden="true">→</span></button></div>
+        </section>
+        <section id="step-2" class="panel" aria-labelledby="title-2" hidden>
+          <div class="section-top"><p class="eyebrow">02 / Set a comparison</p><h2 id="title-2" tabindex="-1">Make the assumptions visible.</h2><p>These scenarios are examples for exploration. They are not validated standards for nonprofit categories or any funder’s settings.</p></div>
+          <div id="scenario-choices" class="scenario-choices"></div>
+          <div class="setting-grid"><label>Minimum current ratio<input id="threshold-current" type="number" step="any" min="0.01"></label><label>Minimum reserve months<input id="threshold-reserve" type="number" step="any" min="0.01"></label><label>Maximum restricted net assets (%)<input id="threshold-restriction" type="number" step="any" min="0" max="100"></label></div>
+          <div id="parameter-origin" class="explanation"></div>
+          <div class="score-option"><label class="check-label"><input id="showScore" type="checkbox"><span><b>Include an illustrative index</b><small>Optional. This app’s formula is not PJMF’s scoring method and cannot predict a grant decision.</small></span></label></div>
+          <fieldset id="weights" hidden><legend>Index weights (must total 100%)</legend><div class="setting-grid"><label>Current ratio (%)<input id="weight-0" type="number" min="0" max="100" step="any"></label><label>Reserve months (%)<input id="weight-1" type="number" min="0" max="100" step="any"></label><label>Restricted assets (%)<input id="weight-2" type="number" min="0" max="100" step="any"></label></div><p id="weight-total"></p></fieldset>
+          <div id="setting-errors" role="alert"></div>
+          <label class="context-label">Assumption source or rationale<textarea id="scenario-note" rows="3" maxlength="3000" placeholder="Optional: name the funder policy or explain the settings you chose."></textarea></label>
+          <div class="panel-footer"><button class="secondary" data-next="1">Back to figures</button><button class="primary" data-next="3">See your report <span aria-hidden="true">→</span></button></div>
+        </section>
+        <section id="step-3" class="panel report" aria-labelledby="title-3" hidden>
+          <div class="section-top report-top"><div><p class="eyebrow">03 / Financial ratio report</p><h2 id="title-3" tabindex="-1">Your figures, in context.</h2><p id="report-subtitle"></p></div><div class="report-tools"><button class="secondary" id="export">Save analysis</button><button class="primary" id="print">Print / PDF</button></div></div>
+          <div id="report-content"></div>
+          <div class="panel-footer"><button class="secondary" data-next="1">Edit source figures</button><button class="secondary" data-next="2">Change assumptions</button></div>
+        </section>
+      </div>
+    </div>
+    <section id="method" class="method"><p class="eyebrow">The method, in plain sight</p><h2>Useful questions.<br><span class="serif">No automatic verdicts.</span></h2><div class="method-columns"><div><h3>Three ratios</h3><p>Current assets ÷ current liabilities. Available unrestricted cash and liquid investments ÷ average monthly expenses. Donor-restricted net assets ÷ total net assets.</p><p>Reserve coverage assumes the entered period’s average spending is representative. It does not predict future cash flow.</p></div><div><h3>Explicit assumptions</h3><p>PJMF publishes examples of a 1.0 or 0.5 current-ratio threshold. Other thresholds, weights, and the optional index here are this simulator’s assumptions. You can change them and compare the result.</p><p>Missing evidence stays missing. No risk grade or funding recommendation is produced.</p></div><div><h3>Sources you can check</h3><ul><li><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">PJMF: Grant Guardian documentation ↗</a></li><li><a href="https://www.irs.gov/pub/irs-pdf/f990.pdf" target="_blank" rel="noopener noreferrer">IRS: Form 990 ↗</a></li><li><a href="https://medium.com/patrick-j-mcgovern-foundation/social-responsibility-comes-first-product-development-lessons-from-grant-guardian-3c5fe6916019" target="_blank" rel="noopener noreferrer">PJMF: Product development lessons ↗</a></li></ul><p>Documentation reviewed September 29, 2026. Source guidance in this tool is tied to the 2025 form; the IRS link may later serve a newer edition.</p></div></div></section>
+  </main>
+  <footer class="site-footer"><span>Grant Guardian / Independent explorer</span><span>v2.0.0 · Built by Wayan Vota</span></footer>
+  <dialog id="replace-dialog"><h2>Replace this analysis?</h2><p id="replace-message">Export your current work first if you want to keep it.</p><div class="dialog-actions"><button class="secondary" id="cancel-replace">Keep current work</button><button class="primary" id="confirm-replace">Replace analysis</button></div></dialog>
+  <noscript>This tool requires JavaScript to calculate ratios. All calculations run in your browser.</noscript>
+  <script type="module">
+const VERSION = '2.0.0';
+const FIELDS = [
+  {id:'currentAssets', label:'Current assets', group:'Position', hint:'Use the classified balance sheet. Form 990 does not give a single current-assets total.'},
+  {id:'currentLiabilities', label:'Current liabilities', group:'Position', hint:'Use the classified balance sheet. Form 990 does not give a single current-liabilities total.'},
+  {id:'totalAssets', label:'Total assets', group:'Position', hint:'2025 Form 990, Part X, line 16, end-of-year column.'},
+  {id:'totalLiabilities', label:'Total liabilities', group:'Position', hint:'2025 Form 990, Part X, line 26, end-of-year column.'},
+  {id:'unrestrictedCash', label:'Unrestricted cash', group:'Reserves', hint:'Verify availability and donor restrictions in the notes. Part X, lines 1–2 alone do not establish unrestricted cash.'},
+  {id:'liquidInvestments', label:'Available liquid investments', group:'Reserves', hint:'Use investment schedules. Include only liquid, unrestricted amounts, and exclude cash already entered above.'},
+  {id:'totalExpenses', label:'Total expenses for this period', group:'Reserves', hint:'2025 Form 990, Part IX, line 25, column A. Use the same period length entered above.'},
+  {id:'restrictedNetAssets', label:'Net assets with donor restrictions', group:'Restrictions', hint:'2025 Form 990, Part X, line 28, where applicable. Otherwise use the statements and notes.', signed:true},
+  {id:'unrestrictedNetAssets', label:'Net assets without donor restrictions', group:'Restrictions', hint:'Optional reconciliation check. 2025 Form 990, Part X, line 27, where applicable.', signed:true, optional:true},
+  {id:'totalRevenue', label:'Total revenue for this period', group:'Restrictions', hint:'Optional context. 2025 Form 990, Part VIII, line 12, column A.', signed:true, optional:true},
+];
+const SCENARIOS = {
+  reference:{name:'Reference', current:1, reserve:3, restriction:60, weights:[35,40,25]},
+  lower:{name:'Lower liquidity', current:.5, reserve:1.5, restriction:75, weights:[30,45,25]},
+  middle:{name:'Middle', current:.75, reserve:2, restriction:70, weights:[35,40,25]},
+};
+function blankState() {
+  return {schemaVersion:1, appVersion:VERSION, organization:'', fiscalEnd:'', months:12, currency:'USD', document:'', formYear:'2025', notes:'', scenarioNote:'', showScore:false, scenarioKey:'reference', scenario:structuredClone(SCENARIOS.reference), entries:Object.fromEntries(FIELDS.map(f=>[f.id,{value:'',source:'',confirmed:false}]))};
+}
+function parseAmount(value) {
+  if (value === '' || value === null || value === undefined || String(value).trim() === '') return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : NaN;
+}
+function validateScenario(s) {
+  const errors=[];
+  if(!Number.isFinite(s.current)||s.current<=0) errors.push('Current-ratio threshold must be greater than zero.');
+  if(!Number.isFinite(s.reserve)||s.reserve<=0) errors.push('Reserve threshold must be greater than zero.');
+  if(!Number.isFinite(s.restriction)||s.restriction<0||s.restriction>100) errors.push('Restriction threshold must be between 0 and 100%.');
+  if(!Array.isArray(s.weights)||s.weights.length!==3||s.weights.some(w=>!Number.isFinite(w)||w<0||w>100)||Math.abs(s.weights.reduce((a,b)=>a+b,0)-100)>.000001) errors.push('Each weight must be between 0 and 100, and weights must total exactly 100%.');
+  return errors;
+}
+const bound=n=>Math.min(100,Math.max(0,n));
+function componentScore(value, threshold, direction) {
+  if(!Number.isFinite(value)||!Number.isFinite(threshold)||value<0||threshold<0) return null;
+  if(direction==='higher') return threshold>0 ? bound(70*value/threshold) : null;
+  return threshold===0 ? (value===0?100:0) : bound(100-30*value/threshold);
+}
+function analyze(state, scenario=state.scenario) {
+  const values=Object.fromEntries(FIELDS.map(f=>[f.id,parseAmount(state.entries[f.id]?.value)]));
+  const errors=[], notices=[], settingsErrors=validateScenario(scenario);
+  const known=id=>Number.isFinite(values[id]);
+  for(const f of FIELDS) {
+    if(Number.isNaN(values[f.id])||(known(f.id)&&!f.signed&&values[f.id]<0)) errors.push(`${f.label} must be a valid ${f.signed?'':'nonnegative '}number.`);
+  }
+  const months=Number(state.months);
+  if(!Number.isFinite(months)||months<=0||months>24) errors.push('Period length must be greater than zero and no more than 24 months.');
+  const compare=(a,b,message)=>{if(known(a)&&known(b)&&values[a]>values[b]) errors.push(message);};
+  compare('currentAssets','totalAssets','Current assets exceed total assets. Check that both figures use the same date.');
+  compare('currentLiabilities','totalLiabilities','Current liabilities exceed total liabilities. Check the source figures.');
+  if(known('unrestrictedCash')&&known('liquidInvestments')&&known('totalAssets')&&values.unrestrictedCash+values.liquidInvestments>values.totalAssets) errors.push('Available cash and investments exceed total assets. Check for double counting.');
+  const net=known('totalAssets')&&known('totalLiabilities') ? values.totalAssets-values.totalLiabilities : null;
+  if(net!==null&&net<=0) notices.push('Total net assets are zero or negative. The restriction ratio and illustrative index are unavailable. Review the balance sheet with the organization; this is not a funding decision.');
+  if(net!==null&&known('restrictedNetAssets')&&known('unrestrictedNetAssets')&&Math.abs(net-values.restrictedNetAssets-values.unrestrictedNetAssets)>1) errors.push('Net-asset categories do not reconcile to total assets minus total liabilities (tolerance: 1 currency unit).');
+  if(known('restrictedNetAssets')&&values.restrictedNetAssets<0) notices.push('Donor-restricted net assets are negative. Review the accounting presentation before interpreting a restriction ratio.');
+  if(known('totalRevenue')&&known('totalExpenses')&&values.totalExpenses>values.totalRevenue) notices.push('Expenses exceed revenue for this period. Discuss planned reserve use, award timing, and one-time costs before interpreting the difference.');
+  function ratio(ids, compute, unavailable) {
+    const missing=ids.filter(id=>!known(id));
+    if(missing.length) return {value:null, confirmed:false, reason:`Missing or invalid: ${missing.map(id=>FIELDS.find(f=>f.id===id).label.toLowerCase()).join(', ')}.`};
+    if(ids.some(id=>!FIELDS.find(f=>f.id===id).signed&&values[id]<0)) return {value:null,confirmed:false,reason:'Correct negative inputs first.'};
+    const computed=compute();
+    const result=Number.isFinite(computed)?computed:null;
+    return {value:result,confirmed:result!==null&&Boolean(state.document.trim())&&Boolean(state.fiscalEnd)&&ids.every(id=>state.entries[id].confirmed&&state.entries[id].source.trim()),reason:result===null?unavailable:''};
+  }
+  const ratios=[
+    ratio(['currentAssets','currentLiabilities'],()=>values.currentLiabilities>0?values.currentAssets/values.currentLiabilities:null,'Current liabilities are zero. A conventional current ratio cannot be calculated.'),
+    ratio(['unrestrictedCash','liquidInvestments','totalExpenses'],()=>values.totalExpenses>0&&months>0&&months<=24?(values.unrestrictedCash+values.liquidInvestments)/(values.totalExpenses/months):null,'Positive expenses and a valid period length are needed for reserve coverage.'),
+    ratio(['totalAssets','totalLiabilities','restrictedNetAssets'],()=>net>0&&values.restrictedNetAssets>=0?values.restrictedNetAssets/net*100:null,'Positive total net assets and nonnegative restricted net assets are needed for this ratio.'),
+  ];
+  if(ratios[2].value>100) notices.push('Restrictions exceed 100% of total net assets. This can occur when net assets without donor restrictions are negative. Check the reconciliation and discuss availability of funds.');
+  const thresholds=[scenario.current,scenario.reserve,scenario.restriction];
+  ratios.forEach((r,i)=>{r.meets=r.value===null||settingsErrors.length||errors.length?null:i===2?r.value<=thresholds[i]:r.value>=thresholds[i];});
+  const missing=FIELDS.filter(f=>!f.optional&&!known(f.id)).map(f=>f.id);
+  const verified=FIELDS.filter(f=>!f.optional&&known(f.id)&&state.entries[f.id].confirmed&&state.entries[f.id].source.trim()).length;
+  const canScore=errors.length===0&&settingsErrors.length===0&&ratios.every(r=>r.value!==null&&r.confirmed);
+  const score=canScore?ratios.reduce((sum,r,i)=>sum+componentScore(r.value,thresholds[i],i===2?'lower':'higher')*scenario.weights[i]/100,0):null;
+  return {values,ratios,net,errors,notices,settingsErrors,missing,verified,required:FIELDS.filter(f=>!f.optional).length,score};
+}
+function exportState(state) { return JSON.stringify({...state,appVersion:VERSION,exportedAt:new Date().toISOString()},null,2); }
+function importState(text) {
+  if(text.length>500000) throw new Error('File is too large. Choose a Grant Guardian JSON export smaller than 500 KB.');
+  const data=JSON.parse(text), state=blankState();
+  if(!data||data.schemaVersion!==1||!data.entries||!data.scenario) throw new Error('This is not a supported Grant Guardian export.');
+  for(const key of ['organization','fiscalEnd','currency','document','formYear','notes']) {
+    if(typeof data[key]!=='string'||data[key].length>10000) throw new Error(`Invalid ${key} in the export.`);
+    state[key]=data[key];
+  }
+  if(!['USD','EUR','GBP','CAD','AUD','Other'].includes(state.currency)) throw new Error('Unsupported currency label.');
+  if(state.fiscalEnd&&!/^\d{4}-\d{2}-\d{2}$/.test(state.fiscalEnd)) throw new Error('Invalid fiscal period end.');
+  if(!['2025','other'].includes(state.formYear)) throw new Error('Unsupported source guidance.');
+  if(typeof data.months!=='number'||!Number.isFinite(data.months)||data.months<=0||data.months>24) throw new Error('Invalid period length.');
+  state.months=data.months;
+  state.scenario={name:'Imported settings',current:data.scenario.current,reserve:data.scenario.reserve,restriction:data.scenario.restriction,weights:data.scenario.weights};
+  if(validateScenario(state.scenario).length) throw new Error('Invalid scenario settings in the export.');
+  state.scenarioKey='custom'; state.showScore=data.showScore===true;
+  if(data.scenarioNote!==undefined&&(typeof data.scenarioNote!=='string'||data.scenarioNote.length>10000)) throw new Error('Invalid assumption notes.');
+  state.scenarioNote=data.scenarioNote||'';
+  for(const f of FIELDS) {
+    const entry=data.entries[f.id];
+    if(!entry||typeof entry.source!=='string'||entry.source.length>10000||!['string','number'].includes(typeof entry.value)||String(entry.value).length>100||Number.isNaN(parseAmount(entry.value))) throw new Error(`Invalid ${f.label} in the export.`);
+    if(parseAmount(entry.value)!==null&&!f.signed&&parseAmount(entry.value)<0) throw new Error(`Invalid negative ${f.label}.`);
+    state.entries[f.id]={value:String(entry.value),source:entry.source,confirmed:entry.confirmed===true};
+  }
+  return state;
+}
+function sampleState() {
+  const s=blankState(); Object.assign(s,{organization:'Example Community Foundation (fictional)',fiscalEnd:'2025-12-31',document:'Fictional statements for demonstration',notes:'Example only. An award is restricted to next year’s program; discuss its release schedule before interpreting available resources.'});
+  const vals=[240000,120000,850000,250000,180000,60000,960000,360000,240000,1000000];
+  FIELDS.forEach((f,i)=>s.entries[f.id]={value:String(vals[i]),source:'Demo figure, not evidence',confirmed:false});
+  return s;
+}
+
+let state=blankState(), step=1, dirty=false, pendingReplacement=null;
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const number=(n,digits=2)=>n===null?'Unavailable':Number(n).toLocaleString(undefined,{maximumFractionDigits:digits});
+const money=n=>n===null?'Unknown':`${state.currency==='Other'?'units':state.currency} ${number(n)}`;
+const announce=message=>$('status').textContent=message;
+function changed(){dirty=true;}
+function clearConfirmations(){for(const entry of Object.values(state.entries))entry.confirmed=false;for(const f of FIELDS){const c=$(`confirmed-${f.id}`);if(c)c.checked=false;}}
+function mountFields(){
+  let group='';
+  $('fields').innerHTML=FIELDS.map(f=>{
+    const heading=group!==f.group?`<div class="group-title"><h3>${f.group}</h3><span class="small-label">${f.group==='Position'?'At period end':f.group==='Reserves'?'Available resources':'Funding context'}</span></div>`:'';group=f.group;
+    const hint=state.formYear==='2025'?f.hint:'Use the matching financial statement, notes, or schedule. Verify the definition and accounting presentation for this reporting year.';
+    const e=state.entries[f.id];
+    return `${heading}<div class="field-row"><div><label class="field-title" for="value-${f.id}">${f.label}${f.optional?'<span class="optional">Optional</span>':''}</label><p class="field-help" id="help-${f.id}">${hint}</p></div><div class="field-controls"><input class="amount" id="value-${f.id}" type="number" step="any" ${f.signed?'':'min="0"'} placeholder="Unknown" value="${esc(e.value)}" aria-describedby="help-${f.id}"><label for="source-${f.id}">Page / note / schedule<input id="source-${f.id}" maxlength="400" placeholder="e.g. p. 6, Note 3" value="${esc(e.source)}"></label><label class="check-label"><input type="checkbox" id="confirmed-${f.id}" ${e.confirmed?'checked':''}><span>I checked this figure against the source</span></label></div></div>`;
+  }).join('');
+  for(const f of FIELDS){
+    const e=state.entries[f.id], check=$(`confirmed-${f.id}`);
+    for(const key of ['value','source']) $(`${key}-${f.id}`).addEventListener('input',event=>{e[key]=event.target.value;e.confirmed=false;check.checked=false;changed();});
+    check.addEventListener('change',()=>{
+      if(check.checked&&(!Number.isFinite(parseAmount(e.value))||!e.source.trim())){check.checked=false;announce(`Enter ${f.label.toLowerCase()} and a source reference before confirming it.`);}
+      e.confirmed=check.checked;changed();
+    });
+  }
+}
+function mountSettings(){
+  $('scenario-choices').innerHTML=Object.entries(SCENARIOS).map(([key,s])=>`<button class="scenario" data-scenario="${key}" aria-pressed="${state.scenarioKey===key}">${s.name}<small>${s.current}× current · ${s.reserve} mo. reserves</small></button>`).join('');
+  document.querySelectorAll('[data-scenario]').forEach(button=>button.addEventListener('click',()=>{state.scenarioKey=button.dataset.scenario;state.scenario=structuredClone(SCENARIOS[state.scenarioKey]);mountSettings();changed();}));
+  for(const key of ['current','reserve','restriction'])$(`threshold-${key}`).value=state.scenario[key];
+  state.scenario.weights.forEach((w,i)=>$(`weight-${i}`).value=w);
+  $('showScore').checked=state.showScore;
+  $('scenario-note').value=state.scenarioNote;
+  renderSettingFeedback();
+}
+function renderSettingFeedback(){
+  const published=[.5,1].includes(state.scenario.current);
+  $('parameter-origin').textContent=`${state.scenarioKey==='custom'?'Custom settings. ':''}${published?'This current-ratio threshold matches a published PJMF example.':'This current-ratio threshold is a simulator assumption or your own setting.'} Reserve and restriction thresholds, weights, and index formulas are simulator assumptions unless you document another source below.`;
+  $('weights').hidden=!state.showScore;
+  $('weight-total').textContent=`Total weight: ${number(state.scenario.weights.reduce((a,b)=>a+b,0),6)}%`;
+  const errors=validateScenario(state.scenario);
+  $('setting-errors').innerHTML=errors.length?box(errors,'Check your assumptions','error-box'):'';
+  document.querySelectorAll('[data-scenario]').forEach(b=>b.setAttribute('aria-pressed',String(state.scenarioKey===b.dataset.scenario)));
+}
+const box=(items,title,klass='notice-box')=>`<div class="${klass}"><b>${esc(title)}</b><ul>${items.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div>`;
+const names=['Current ratio','Reserve coverage','Restricted net assets'];
+const units=['×','months','%'];
+const ratioText=(r,i)=>r.value===null?'Unavailable':`${number(r.value)}${i===1?' months':units[i]}`;
+const statusText=r=>r.meets===null?'Not evaluated':!r.confirmed?(r.meets?'Meets setting · unverified':'Outside setting · unverified'):(r.meets?'Meets setting':'Outside setting');
+function renderReport(){
+  const a=analyze(state), date=new Date();
+  $('report-subtitle').textContent=`${state.organization||'Unnamed organization'} · Period ending ${state.fiscalEnd||'not entered'} · ${state.months} months · ${state.currency==='Other'?'Unspecified currency':state.currency}`;
+  const formulas=[`Current assets ${money(a.values.currentAssets)} ÷ current liabilities ${money(a.values.currentLiabilities)}.`,`(${money(a.values.unrestrictedCash)} cash + ${money(a.values.liquidInvestments)} investments) ÷ (${money(a.values.totalExpenses)} expenses ÷ ${state.months} months).`,`Donor-restricted net assets ${money(a.values.restrictedNetAssets)} ÷ total net assets ${money(a.net)} × 100. Total net assets = total assets minus liabilities.`];
+  const checks=[...a.errors,...a.settingsErrors];
+  const needsMetadata=!state.document.trim()||!state.fiscalEnd;
+  const dataComplete=a.missing.length===0;
+  let html=`<div class="completeness"><strong>${a.verified} / ${a.required}</strong><div><b>Required figures confirmed with references</b><p>${dataComplete?'All required amounts entered.':'Unknown amounts remain unknown.'} ${needsMetadata?'Add the document title and fiscal date to complete verification.':'Document and period identified.'} ${a.ratios.every(r=>r.confirmed)&&checks.length===0?'Ratios have confirmed inputs.':'Treat unverified calculations as provisional.'}</p></div></div>`;
+  if(checks.length)html+=box(checks,'Resolve these inconsistencies before relying on the report','error-box');
+  if(a.notices.length)html+=box(a.notices,'Questions for review');
+  html+=`<div class="metric-grid">${a.ratios.map((r,i)=>`<article class="metric"><h3>${names[i]}</h3><div class="number">${r.value===null?'—':number(r.value)} <small>${r.value===null?'unavailable':units[i]}</small></div><span class="tag ${r.meets===null?'':r.meets?'met':'review'}">${statusText(r)}</span><p>${esc(r.reason||formulas[i])}</p><p>Selected setting: ${i===2?'at most':'at least'} ${esc([state.scenario.current,state.scenario.reserve,state.scenario.restriction][i])} ${units[i]}.</p></article>`).join('')}</div>`;
+  html+=`<section class="report-section"><h3>Rule-based summary</h3><p>${a.ratios.map((r,i)=>r.value===null?`${names[i]} is unavailable. ${r.reason}`:`${names[i]} is ${ratioText(r,i)} and ${r.meets===null?'cannot be evaluated until the flagged issues are resolved':r.meets?'meets the selected setting':'falls outside the selected setting'}${r.confirmed?'':' using unverified inputs'}.`).map(esc).join(' ')}</p><p>These indicators describe liquidity and restrictions under explicit assumptions. They do not establish organizational quality or predict a funding decision.</p></section>`;
+  if(state.showScore){
+    html+=`<section class="index-box"><span class="small-label">Optional illustrative index</span><div class="number">${a.score===null?'Unavailable':`${number(a.score,1)} / 100`}</div><p>${a.score===null?'Every required figure must have a value, source reference, and confirmation; document title and fiscal date must be present; all ratios and settings must be valid and figures must reconcile. No neutral score is substituted for missing data.':'A weighted calculation using this app’s disclosed formulas. There is no financial-health label, validated risk classification, or PJMF score attached to it.'}</p></section>`;
+  }
+  html+=`<section class="report-section"><h3>How assumptions change the reading</h3><p>The same figures are shown against each scenario. A changed setting changes the comparison, not the underlying finances. All example scenarios below are simulator assumptions except the published 1.0 and 0.5 current-ratio examples.</p><div class="table-wrap" role="region" aria-label="Scenario comparison" tabindex="0"><table class="comparison"><thead><tr><th scope="col">Scenario</th><th scope="col">Current ratio</th><th scope="col">Reserve coverage</th><th scope="col">Restrictions</th>${state.showScore?'<th scope="col">Index</th>':''}</tr></thead><tbody>${[['selected',{...state.scenario,name:'Your selected settings'}],...Object.entries(SCENARIOS)].map(([key,s])=>{const result=analyze(state,s);return `<tr ${key==='selected'?'class="selected-row"':''}><th scope="row">${esc(s.name)}<small>Weights: ${s.weights.map(w=>esc(number(w))).join(' / ')}%</small></th>${result.ratios.map((r,i)=>`<td>${statusText(r)}<small>${i===2?'≤':'≥'} ${esc([s.current,s.reserve,s.restriction][i])} ${units[i]}</small></td>`).join('')}${state.showScore?`<td>${result.score===null?'Unavailable':number(result.score,1)}</td>`:''}</tr>`;}).join('')}</tbody></table></div>${state.scenarioNote?`<p class="context-copy">${esc(state.scenarioNote)}</p>`:''}</section>`;
+  const prompts=[];
+  if(a.ratios[0].value!==null)prompts.push('When do current liabilities fall due, and how collectible are the receivables included in current assets?');
+  if(a.ratios[1].value!==null)prompts.push('Does average spending reflect the months ahead? What restrictions, seasonality, or planned reserve use change the cash picture?');
+  if(a.ratios[2].value!==null)prompts.push('When will restrictions be released, and what share of restricted awards supports future commitments?');
+  if(prompts.length)html+=`<section class="report-section"><h3>Bring these questions to the conversation</h3><ul>${prompts.map(p=>`<li>${p}</li>`).join('')}</ul></section>`;
+  html+=`<section class="report-section"><h3>Organization context</h3><p class="context-copy">${esc(state.notes||'No context notes provided.')}</p></section>`;
+  html+=`<section class="report-section"><h3>Source and verification record</h3><p>Document: <b>${esc(state.document||'Not identified')}</b>. ${state.formYear==='2025'?'Guidance: 2025 Form 990 and statements.':'Guidance: other year or presentation; verify against your source.'} References below were supplied by the user. This tool does not inspect documents.</p><div class="table-wrap" role="region" aria-label="Source figures" tabindex="0"><table><thead><tr><th scope="col">Figure</th><th scope="col">Amount</th><th scope="col">Source reference</th><th scope="col">User check</th></tr></thead><tbody>${FIELDS.map(f=>{const e=state.entries[f.id];return `<tr><th scope="row">${f.label}</th><td>${esc(money(a.values[f.id]))}</td><td>${esc(e.source||'Not provided')}</td><td>${e.confirmed&&e.source.trim()&&Number.isFinite(a.values[f.id])?'Confirmed':'Unverified'}</td></tr>`;}).join('')}</tbody></table></div></section>`;
+  html+=`<details><summary>How the illustrative index is calculated</summary><p>For current ratio and reserve coverage: component = clamp(70 × value ÷ threshold, 0, 100). For restrictions with a positive threshold: component = clamp(100 − 30 × value ÷ threshold, 0, 100). At a zero restriction threshold, zero restrictions score 100 and any positive restriction ratio scores 0. The weighted mean uses the three stated weights. These formulas are simulator assumptions, not a published PJMF method. A higher restriction ratio never increases its component score.</p></details><div class="report-footnote"><p>Grant Guardian v${VERSION} · Created ${esc(date.toLocaleString())} · Currency: ${esc(state.currency)} (no conversion) · Period: ${esc(state.months)} months ending ${esc(state.fiscalEnd||'not entered')}.</p>${state.showScore?'<p>Index formula: higher-is-better components = clamp(70 × value ÷ threshold, 0, 100); restriction component = clamp(100 − 30 × value ÷ threshold, 0, 100). At a zero restriction threshold: 100 for zero restrictions, otherwise 0. Index = weighted mean. These are simulator assumptions.</p>':''}<p>Independent tool by Wayan Vota. Not affiliated with PJMF. Manual inputs and deterministic calculations; no AI extraction or generated analysis.</p><p>Method source: <a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/">PJMF’s public Grant Guardian documentation</a>. Reviewed September 29, 2026. Example thresholds and the optional index do not reproduce a particular funder’s assessment.</p></div>`;
+  $('report-content').innerHTML=html;
+}
+function goStep(next,focus=true){
+  step=next;
+  for(let i=1;i<=3;i++)$(`step-${i}`).hidden=i!==next;
+  document.querySelectorAll('[data-step]').forEach(button=>{const active=Number(button.dataset.step)===next;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');});
+  if(next===3)renderReport();
+  if(focus){$(`title-${next}`).focus({preventScroll:true});document.querySelector('.workspace').scrollIntoView({behavior:'instant',block:'start'});}
+}
+function mount(){
+  for(const id of ['organization','fiscalEnd','months','currency','document','formYear','notes'])$(id).value=state[id];
+  mountFields();mountSettings();if(step===3)renderReport();
+}
+function replaceWith(next,message){
+  const apply=()=>{state=next;dirty=true;mount();goStep(1);announce(message);};
+  if(dirty){pendingReplacement=apply;$('replace-dialog').showModal();}else apply();
+}
+for(const id of ['organization','fiscalEnd','months','currency','document','notes'])$(id).addEventListener('input',event=>{state[id]=id==='months'?Number(event.target.value):event.target.value;if(['fiscalEnd','months','currency','document'].includes(id))clearConfirmations();changed();});
+$('formYear').addEventListener('change',event=>{state.formYear=event.target.value;clearConfirmations();mountFields();changed();});
+for(const key of ['current','reserve','restriction'])$(`threshold-${key}`).addEventListener('input',event=>{state.scenario[key]=event.target.value===''?NaN:Number(event.target.value);state.scenarioKey='custom';state.scenario.name='Custom';renderSettingFeedback();changed();});
+for(let i=0;i<3;i++)$(`weight-${i}`).addEventListener('input',event=>{state.scenario.weights[i]=event.target.value===''?NaN:Number(event.target.value);state.scenarioKey='custom';state.scenario.name='Custom';renderSettingFeedback();changed();});
+$('showScore').addEventListener('change',event=>{state.showScore=event.target.checked;renderSettingFeedback();changed();});
+$('scenario-note').addEventListener('input',event=>{state.scenarioNote=event.target.value;changed();});
+document.querySelectorAll('[data-step],[data-next]').forEach(button=>button.addEventListener('click',()=>goStep(Number(button.dataset.step||button.dataset.next))));
+$('sample').addEventListener('click',()=>replaceWith(sampleState(),'Fictional example loaded. Demo figures are unverified and should not be treated as evidence.'));
+$('cancel-replace').addEventListener('click',()=>{$('replace-dialog').close();pendingReplacement=null;});
+$('confirm-replace').addEventListener('click',()=>{$('replace-dialog').close();pendingReplacement?.();pendingReplacement=null;});
+$('replace-dialog').addEventListener('cancel',()=>{pendingReplacement=null;});
+$('import').addEventListener('click',()=>$('import-file').click());
+$('import-file').addEventListener('change',async event=>{try{const file=event.target.files[0];if(!file)return;if(file.size>500000)throw new Error('Choose a Grant Guardian export smaller than 500 KB.');const next=importState(await file.text());replaceWith(next,'Saved analysis opened locally. Check its source references before relying on it.');}catch(error){announce(`Could not open analysis: ${error.message}`);}finally{event.target.value='';}});
+$('export').addEventListener('click',()=>{
+  if(validateScenario(state.scenario).length){announce('Correct the scenario settings before saving so your file can be reopened.');return;}
+  if(!Number.isFinite(state.months)||state.months<=0||state.months>24){announce('Correct the period length before saving.');return;}
+  try{importState(exportState(state));}catch(error){announce(`Correct the inputs before saving: ${error.message}`);return;}
+  const url=URL.createObjectURL(new Blob([exportState(state)],{type:'application/json'})), link=document.createElement('a');
+  link.href=url;link.download=`grant-guardian-${new Date().toISOString().slice(0,10)}.json`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);dirty=false;announce('Analysis exported as a local JSON file. It contains the financial figures and notes you entered.');
+});
+$('print').addEventListener('click',()=>{renderReport();window.print();});
+window.addEventListener('beforeprint',renderReport);
+window.addEventListener('beforeunload',event=>{if(dirty){event.preventDefault();event.returnValue='';}});
+mount();
+
+</script>
+</body>
+</html>

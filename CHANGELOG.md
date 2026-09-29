@@ -1,5 +1,12 @@
 # Changes
 
+## 2.0.1 · September 29, 2026
+
+- Kept the composite score optional and labeled it “Illustrative score under these settings.”
+- Placed supporting figures and source verification before the score.
+- Showed thresholds, component scores, weights, contributions, and formulas beside the result, including in print.
+- Kept scenario comparisons and the existing arithmetic; no financial-health, risk, or funding verdict is attached to the score.
+
 ## 2.0.0 · September 29, 2026
 
 - Reconstructed maintainable source from the served HTML; retained the untouched baseline and documented missing original build history.

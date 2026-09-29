@@ -1,4 +1,4 @@
-export const VERSION = '2.0.0';
+export const VERSION = '2.0.1';
 export const FIELDS = [
   {id:'currentAssets', label:'Current assets', group:'Position', hint:'Use the classified balance sheet. Form 990 does not give a single current-assets total.'},
   {id:'currentLiabilities', label:'Current liabilities', group:'Position', hint:'Use the classified balance sheet. Form 990 does not give a single current-liabilities total.'},
