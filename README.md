@@ -4,6 +4,8 @@ An independent financial ratio explorer for nonprofits, built by Wayan Vota. Ent
 
 This repository preserves the publicly served February-era implementation and documents the September 2026 reconstruction, accuracy fixes, and Intercom-inspired redesign. It does **not** claim to recover the missing original Cowork conversation or reproduce PJMF's proprietary assessment.
 
+Published September 29, 2026: [Open Grant Guardian](https://wayan.com/grant-guardian-analyzer.html). See the [deployment record](docs/DEPLOYMENT.md) for verification.
+
 ## Run it
 
 Requires Node.js 20 or later. No dependency installation, API key, account, or backend is needed.

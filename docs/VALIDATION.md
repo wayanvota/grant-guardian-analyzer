@@ -35,4 +35,4 @@ Screenshot: [Desktop interface](screenshots/desktop.png).
 
 Print styling is implemented, but a rendered PDF and page breaks have not been visually verified. Browser coverage is limited to the in-app browser; a full screen-reader audit and separate Firefox/Safari checks were not performed. These checks establish application behavior for the tested cases, not financial validity of the illustrative index or correctness of user-entered records.
 
-The public wayan.com page was not updated. Before publication, review a printed report and a saved file in the intended production browser.
+The release was subsequently published on September 29, 2026. The exact live page matched the build byte for byte, and Firefox passed the fictional-data report check. See `DEPLOYMENT.md`. PDF layout and a complete browser download-and-reimport cycle remain unverified.
