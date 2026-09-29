@@ -1,12 +1,12 @@
-# Grant Guardian - Reverse Engineered
+# Nonprofit Ratio Explorer
 
-Inspired by PJMF’s Grant Guardian, but this is not that
+Inspired by PJMF’s Grant Guardian.
 
 An independent financial ratio explorer for nonprofits, built by Wayan Vota. Enter figures with source references, compare explicit assumptions, and prepare questions for a conversation with a funder.
 
 This repository contains the application source, documented formulas, research, and validation results.
 
-Published September 29, 2026: [Open Grant Guardian](https://wayan.com/grant-guardian-analyzer.html). See the [deployment record](docs/DEPLOYMENT.md) for verification.
+Published September 29, 2026: [Open Nonprofit Ratio Explorer](https://wayan.com/grant-guardian-analyzer.html). See the [deployment record](docs/DEPLOYMENT.md) for verification.
 
 ## Run it
 

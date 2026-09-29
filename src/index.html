@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions. Independent Grant Guardian explorer by Wayan Vota.">
+  <meta name="description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions. Independent Nonprofit Ratio Explorer by Wayan Vota.">
   <meta name="color-scheme" content="light">
-  <title>Grant Guardian - Reverse Engineered</title>
+  <title>Nonprofit Ratio Explorer</title>
   <link rel="stylesheet" href="style.css">
     <link rel="canonical" href="https://wayan.com/grant-guardian-analyzer.html" />
     <link rel="icon" href="https://wayan.com/tool-assets/wayan-favicon.ico" sizes="32x32" type="image/x-icon" />
     <link rel="shortcut icon" href="https://wayan.com/tool-assets/wayan-favicon.ico" type="image/x-icon" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Wayan Vota AI Tools" />
-    <meta property="og:title" content="Grant Guardian - Reverse Engineered" />
+    <meta property="og:title" content="Nonprofit Ratio Explorer" />
     <meta property="og:description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions." />
     <meta property="og:url" content="https://wayan.com/grant-guardian-analyzer.html" />
     <meta property="og:image" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
@@ -23,16 +23,16 @@
     <meta property="og:image:alt" content="AI tools built by Wayan. Practical prototypes with visible evidence and human judgment." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@wayan_vota" />
-    <meta name="twitter:title" content="Grant Guardian - Reverse Engineered" />
+    <meta name="twitter:title" content="Nonprofit Ratio Explorer" />
     <meta name="twitter:description" content="Understand nonprofit financial ratios, check your evidence, and compare explicit assumptions." />
     <meta name="twitter:image" content="https://wayan.com/tool-assets/wayan-ai-tools-share.jpg" />
     <meta name="twitter:image:alt" content="AI tools built by Wayan. Practical prototypes with visible evidence and human judgment." />
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="topbar"><a class="brand" href="#"><span class="mark" aria-hidden="true">g.</span><span class="brand-title">Grant Guardian - Reverse Engineered</span><span class="edition">by Wayan Vota</span></a><a class="method-link" href="#method">How it works <span aria-hidden="true">↗</span></a></header>
+  <header class="topbar"><a class="brand" href="#"><span class="mark" aria-hidden="true">n.</span><span class="brand-title">Nonprofit Ratio Explorer</span><span class="edition">by Wayan Vota</span></a><a class="method-link" href="#method">How it works <span aria-hidden="true">↗</span></a></header>
   <main id="main">
-    <div class="intro"><div><p class="eyebrow">A financial ratio explorer for nonprofits</p><h1>Grant Guardian - Reverse Engineered</h1><p class="lede">Inspired by PJMF’s Grant Guardian, but this is not that</p></div><aside class="independent"><span class="small-label">Independent tool</span><p>Inspired by PJMF’s public Grant Guardian documentation. Not affiliated with PJMF and does not reproduce any funder’s assessment.</p><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">Read PJMF’s documentation ↗</a></aside></div>
+    <div class="intro"><div><h1>Nonprofit Ratio Explorer</h1><p class="lede">Inspired by PJMF’s Grant Guardian.</p></div><aside class="independent"><span class="small-label">Independent tool</span><p>Inspired by PJMF’s public Grant Guardian documentation. Not affiliated with PJMF and does not reproduce any funder’s assessment.</p><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">Read PJMF’s documentation ↗</a></aside></div>
     <div class="workspace">
       <aside class="rail"><nav aria-label="Analysis steps"><button class="step active" data-step="1" aria-current="step"><span>01</span><b>Your figures</b><small>Enter and verify</small></button><button class="step" data-step="2"><span>02</span><b>Your assumptions</b><small>Set a comparison</small></button><button class="step" data-step="3"><span>03</span><b>Your report</b><small>Ratios with context</small></button></nav><div class="local-note"><span class="status-dot"></span><b>Stays in this browser</b><p>No uploads, accounts, or AI calls. Export a copy to save your work. Refreshing clears unsaved entries.</p></div><div class="rail-actions"><button class="text-button" id="sample">Try fictional figures ↗</button><button class="text-button" id="import">Open a saved analysis ↗</button><input id="import-file" type="file" accept=".json,application/json" hidden></div></aside>
       <div class="canvas">
@@ -72,7 +72,7 @@
     </div>
     <section id="method" class="method"><p class="eyebrow">The method, in plain sight</p><h2>Useful questions.<br><span class="serif">No automatic verdicts.</span></h2><div class="method-columns"><div><h3>Three ratios</h3><p>Current assets ÷ current liabilities. Available unrestricted cash and liquid investments ÷ average monthly expenses. Donor-restricted net assets ÷ total net assets.</p><p>Reserve coverage assumes the entered period’s average spending is representative. It does not predict future cash flow.</p></div><div><h3>Explicit assumptions</h3><p>PJMF publishes examples of a 1.0 or 0.5 current-ratio threshold. Other thresholds, weights, and the optional score here are this simulator’s assumptions. You can change them and compare the result.</p><p>Missing evidence stays missing. No risk grade or funding recommendation is produced.</p></div><div><h3>Sources you can check</h3><ul><li><a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/" target="_blank" rel="noopener noreferrer">PJMF: Grant Guardian documentation ↗</a></li><li><a href="https://www.irs.gov/pub/irs-pdf/f990.pdf" target="_blank" rel="noopener noreferrer">IRS: Form 990 ↗</a></li><li><a href="https://medium.com/patrick-j-mcgovern-foundation/social-responsibility-comes-first-product-development-lessons-from-grant-guardian-3c5fe6916019" target="_blank" rel="noopener noreferrer">PJMF: Product development lessons ↗</a></li></ul><p>Documentation reviewed September 29, 2026. Source guidance in this tool is tied to the 2025 form; the IRS link may later serve a newer edition.</p></div></div></section>
   </main>
-  <footer class="site-footer"><span>Grant Guardian - Reverse Engineered</span><span>v2.0.2 · Built by Wayan Vota</span></footer>
+  <footer class="site-footer"><span>Nonprofit Ratio Explorer</span><span>v2.0.3 · Built by Wayan Vota</span></footer>
   <dialog id="replace-dialog"><h2>Replace this analysis?</h2><p id="replace-message">Export your current work first if you want to keep it.</p><div class="dialog-actions"><button class="secondary" id="cancel-replace">Keep current work</button><button class="primary" id="confirm-replace">Replace analysis</button></div></dialog>
   <noscript>This tool requires JavaScript to calculate ratios. All calculations run in your browser.</noscript>
   <script type="module" src="app.js"></script>

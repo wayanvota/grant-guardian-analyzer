@@ -1,5 +1,10 @@
 # Changes
 
+## 2.0.3 · September 29, 2026
+
+- Renamed the tool “Nonprofit Ratio Explorer” and set the tagline to “Inspired by PJMF’s Grant Guardian.”
+- Removed “A financial ratio explorer for nonprofits” above the title. Updated navigation, metadata, footer, report, import messages, and README to match.
+
 ## 2.0.2 · September 29, 2026
 
 - Renamed the tool “Grant Guardian - Reverse Engineered” in the page heading, navigation, browser/social titles, footer, report, and README.

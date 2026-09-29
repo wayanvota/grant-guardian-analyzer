@@ -71,7 +71,7 @@ function renderReport(){
   if(a.ratios[2].value!==null)prompts.push('When will restrictions be released, and what share of restricted awards supports future commitments?');
   if(prompts.length)html+=`<section class="report-section"><h3>Bring these questions to the conversation</h3><ul>${prompts.map(p=>`<li>${p}</li>`).join('')}</ul></section>`;
   html+=`<section class="report-section"><h3>Organization context</h3><p class="context-copy">${esc(state.notes||'No context notes provided.')}</p></section>`;
-  html+=`<div class="report-footnote"><p>Grant Guardian - Reverse Engineered v${VERSION} · Created ${esc(date.toLocaleString())} · Currency: ${esc(state.currency)} (no conversion) · Period: ${esc(state.months)} months ending ${esc(state.fiscalEnd||'not entered')}.</p><p>Independent tool by Wayan Vota. Not affiliated with PJMF. Manual inputs and deterministic calculations; no AI extraction or generated analysis.</p><p>Method source: <a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/">PJMF’s public Grant Guardian documentation</a>. Reviewed September 29, 2026. Example thresholds and the optional score do not reproduce a particular funder’s assessment.</p></div>`;
+  html+=`<div class="report-footnote"><p>Nonprofit Ratio Explorer v${VERSION} · Created ${esc(date.toLocaleString())} · Currency: ${esc(state.currency)} (no conversion) · Period: ${esc(state.months)} months ending ${esc(state.fiscalEnd||'not entered')}.</p><p>Independent tool by Wayan Vota. Not affiliated with PJMF. Manual inputs and deterministic calculations; no AI extraction or generated analysis.</p><p>Method source: <a href="https://www.mcgovern.org/our-work/data-solutions/grant-guardian/">PJMF’s public Grant Guardian documentation</a>. Reviewed September 29, 2026. Example thresholds and the optional score do not reproduce a particular funder’s assessment.</p></div>`;
   $('report-content').innerHTML=html;
 }
 function goStep(next,focus=true){
@@ -101,7 +101,7 @@ $('cancel-replace').addEventListener('click',()=>{$('replace-dialog').close();pe
 $('confirm-replace').addEventListener('click',()=>{$('replace-dialog').close();pendingReplacement?.();pendingReplacement=null;});
 $('replace-dialog').addEventListener('cancel',()=>{pendingReplacement=null;});
 $('import').addEventListener('click',()=>$('import-file').click());
-$('import-file').addEventListener('change',async event=>{try{const file=event.target.files[0];if(!file)return;if(file.size>500000)throw new Error('Choose a Grant Guardian export smaller than 500 KB.');const next=importState(await file.text());replaceWith(next,'Saved analysis opened locally. Check its source references before relying on it.');}catch(error){announce(`Could not open analysis: ${error.message}`);}finally{event.target.value='';}});
+$('import-file').addEventListener('change',async event=>{try{const file=event.target.files[0];if(!file)return;if(file.size>500000)throw new Error('Choose a Nonprofit Ratio Explorer export smaller than 500 KB.');const next=importState(await file.text());replaceWith(next,'Saved analysis opened locally. Check its source references before relying on it.');}catch(error){announce(`Could not open analysis: ${error.message}`);}finally{event.target.value='';}});
 $('export').addEventListener('click',()=>{
   if(validateScenario(state.scenario).length){announce('Correct the scenario settings before saving so your file can be reopened.');return;}
   if(!Number.isFinite(state.months)||state.months<=0||state.months>24){announce('Correct the period length before saving.');return;}

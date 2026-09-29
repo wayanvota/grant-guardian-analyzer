@@ -1,4 +1,4 @@
-export const VERSION = '2.0.2';
+export const VERSION = '2.0.3';
 export const FIELDS = [
   {id:'currentAssets', label:'Current assets', group:'Position', hint:'Use the classified balance sheet. Form 990 does not give a single current-assets total.'},
   {id:'currentLiabilities', label:'Current liabilities', group:'Position', hint:'Use the classified balance sheet. Form 990 does not give a single current-liabilities total.'},
@@ -80,9 +80,9 @@ export function analyze(state, scenario=state.scenario) {
 }
 export function exportState(state) { return JSON.stringify({...state,appVersion:VERSION,exportedAt:new Date().toISOString()},null,2); }
 export function importState(text) {
-  if(text.length>500000) throw new Error('File is too large. Choose a Grant Guardian JSON export smaller than 500 KB.');
+  if(text.length>500000) throw new Error('File is too large. Choose a Nonprofit Ratio Explorer JSON export smaller than 500 KB.');
   const data=JSON.parse(text), state=blankState();
-  if(!data||data.schemaVersion!==1||!data.entries||!data.scenario) throw new Error('This is not a supported Grant Guardian export.');
+  if(!data||data.schemaVersion!==1||!data.entries||!data.scenario) throw new Error('This is not a supported Nonprofit Ratio Explorer export.');
   for(const key of ['organization','fiscalEnd','currency','document','formYear','notes']) {
     if(typeof data[key]!=='string'||data[key].length>10000) throw new Error(`Invalid ${key} in the export.`);
     state[key]=data[key];

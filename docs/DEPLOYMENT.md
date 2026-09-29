@@ -1,6 +1,14 @@
 # Publication status
 
-## Current release: 2.0.2 · September 29, 2026
+## Current release: 2.0.3 · September 29, 2026
+
+Published “Nonprofit Ratio Explorer” with the tagline “Inspired by PJMF’s Grant Guardian.” and removed the introductory eyebrow. The page remains at https://wayan.com/grant-guardian-analyzer.html. Verified the staged SFTP upload before replacement and matched the public HTTPS response byte for byte afterward.
+
+- SHA-256: `27349fe4c1d3959f3b356bc412a66ad678a94a3c9fea84d99f1392cbba6029f3`.
+- Exact title, tagline, navigation, report version, and removed eyebrow verified in the live browser. Desktop and mobile checks passed.
+- Recovery copy: `archive/2026-09-29-v2.0.2-before-nonprofit-rename.html`, SHA-256 `666186aa0e43ec8c1242b4ca57f7be27b1042fa07675cd0a44a87758a3d47f55`.
+
+## Previous release: 2.0.2 · September 29, 2026
 
 Published the requested name “Grant Guardian - Reverse Engineered” and subtitle “Inspired by PJMF’s Grant Guardian, but this is not that”. The standalone file was uploaded through the same verified SFTP connection, checked before replacement, and verified byte for byte at the canonical HTTPS URL.
 
